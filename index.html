@@ -85,11 +85,11 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type":"Question","name":"איך מזמינים מונית?","acceptedAnswer":{"@type":"Answer","text":"בוחרים סוג רכב, ממלאים מאיפה ולאן — והבקשה נפתחת אצלכם בוואטסאפ מוכנה לשליחה. אפשר גם ללחוץ על כפתור הוואטסאפ הצף בכל רגע."}},
-    {"@type":"Question","name":"האם השירות זמין 24/7?","acceptedAnswer":{"@type":"Answer","text":"כן. אנחנו זמינים מסביב לשעון, כל ימות השבוע, כולל לילות, סופי שבוע וחגים."}},
-    {"@type":"Question","name":"אילו סוגי רכבים יש?","acceptedAnswer":{"@type":"Answer","text":"מוניות ל-4 ול-6 נוסעים, מיניבוס/ון להסעות גדולות, רכבי VIP יוקרתיים, ומוניות נגישות לכיסא גלגלים."}},
-    {"@type":"Question","name":"האם אתם נוסעים לשדה התעופה?","acceptedAnswer":{"@type":"Answer","text":"בהחלט. נסיעות לנתב\"ג ובחזרה בכל שעה, עם אפשרות לתיאום מראש כדי שלא תפספסו טיסה."}},
-    {"@type":"Question","name":"כמה עולה נסיעה?","acceptedAnswer":{"@type":"Answer","text":"המחיר תלוי במרחק ובסוג הרכב. שלחו לנו את המוצא והיעד בוואטסאפ ותקבלו הצעת מחיר מהירה וברורה מראש."}}
+    {"@type":"Question","name":"איך מזמינים מונית או רכב הסעה?","acceptedAnswer":{"@type":"Answer","text":"בוחרים קטגוריית רכב (מונית, ואן או רכב הסעות) ואת הדגם, ממלאים מאיפה ולאן, כמה נוסעים, שם וטלפון ופרטי מטען — והבקשה נפתחת אצלכם בוואטסאפ מוכנה לשליחה. אפשר גם ללחוץ על כפתור הוואטסאפ הצף בכל רגע."}},
+    {"@type":"Question","name":"אילו סוגי רכבים יש בצי?","acceptedAnswer":{"@type":"Answer","text":"שלוש קטגוריות: מוניות ל-4 ו-6 נוסעים (כולל מונית נגישה לכיסא גלגלים), מיני-וואן וואנים ל-6 עד 10 נוסעים (סיינה, קרניבל, V-Class, ויטו, ויאנו ועוד), ורכבי הסעות גדולים ל-12 עד 23 נוסעים (ספרינטר, קרפטר, טרנזיט ועוד) — בתצורות לימו וחצי-לימו."}},
+    {"@type":"Question","name":"אפשר להצמיד רכב ונהג ליום שלם או לטיול?","acceptedAnswer":{"@type":"Answer","text":"בהחלט. אנחנו מציעים הצמדת רכב ונהג ליום מלא לקבוצות תיירים, טיולים ואירועים, עם מסלול גמיש ותמחור מותאם ליום. שלחו לנו את התאריך, מספר המשתתפים והמסלול בוואטסאפ ונחזור עם הצעה."}},
+    {"@type":"Question","name":"יש הבדלי מחיר בין הדגמים?","acceptedAnswer":{"@type":"Answer","text":"כן. בעיקר ברכבי ההסעות הגדולים יש הבדלים משמעותיים בין הדגמים והתצורות (12 / 16 / 19 / 20 / 23 נוסעים), וגם בין מיני-וואן לוואן. שלחו לנו את הפרטים בוואטסאפ ותקבלו הצעת מחיר מדויקת מראש."}},
+    {"@type":"Question","name":"השירות זמין 24/7 וגם לשדה התעופה?","acceptedAnswer":{"@type":"Answer","text":"כן — זמינים מסביב לשעון, כל ימות השבוע, כולל לילות וחגים, עם נסיעות לנתב\"ג ובחזרה ואפשרות לתיאום מראש כדי שלא תפספסו טיסה."}}
   ]
 }
 </script>
@@ -315,6 +315,41 @@ header.scrolled{background:rgba(11,11,13,.9);border-block-end-color:var(--line);
   .airport{min-height:0;aspect-ratio:1734/907}
   .airport-cta{display:none}
 }
+/* ====================== car subtypes list ====================== */
+.car-subtypes{list-style:none;margin:0 0 20px;padding:0;display:flex;flex-direction:column;gap:7px}
+.car-subtypes li{position:relative;padding-inline-start:18px;font-size:13.5px;color:var(--muted);line-height:1.4}
+.car-subtypes li::before{content:"";position:absolute;inset-inline-start:0;inset-block-start:8px;
+  width:6px;height:6px;border-radius:50%;background:var(--gold)}
+
+/* ====================== real fleet gallery ====================== */
+.gallery{padding-block:100px;border-block-start:1px solid var(--line)}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-block-start:52px}
+@media(max-width:1000px){.gallery-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.gallery-grid{grid-template-columns:1fr}}
+.gcard{background:var(--bg-elev);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+  margin:0;transition:border-color .4s var(--ease),transform .4s var(--ease)}
+.gcard:hover{border-color:rgba(217,190,134,.4);transform:translateY(-4px)}
+.gcard-media{aspect-ratio:4/3;overflow:hidden;background:#0f0f12}
+.gcard-media img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.gcard:hover .gcard-media img{transform:scale(1.05)}
+.gcard figcaption{padding:18px 20px 22px}
+.gcard-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-block-end:8px;flex-wrap:wrap}
+.gcard-head h3{font-family:var(--serif);font-weight:700;font-size:19px}
+.gcard-head span{font-size:12px;color:var(--gold);letter-spacing:.03em}
+.gcard figcaption p{font-size:14px;color:var(--muted);line-height:1.6}
+/* ====================== day-trip banner ====================== */
+.daytrip{padding-block:90px;border-block-start:1px solid var(--line)}
+.daytrip-inner{position:relative;max-width:var(--maxw);margin-inline:auto;border-radius:22px;overflow:hidden;
+  border:1px solid rgba(217,190,134,.32);
+  background:linear-gradient(120deg,#15130E,#1B1B20 55%,#101013);padding:clamp(34px,5vw,60px)}
+.daytrip-inner::before{content:"";position:absolute;inset-block-start:-40%;inset-inline-start:-10%;
+  width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,var(--gold-glow),transparent 62%);
+  filter:blur(20px);z-index:0}
+.daytrip-inner>*{position:relative;z-index:1}
+.daytrip .eyebrow{margin-block-end:14px}
+.daytrip h2{font-family:var(--serif);font-weight:700;font-size:clamp(28px,4vw,42px);line-height:1.12;max-width:680px}
+.daytrip p{color:var(--muted);font-size:17px;margin-block:16px 28px;max-width:620px;line-height:1.7}
+.daytrip .btn{font-size:16px}
 /* ====================== why ====================== */
 .why{padding-block:100px;border-block-start:1px solid var(--line)}
 .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-block-start:52px}
@@ -409,6 +444,22 @@ footer{padding-block:64px 110px;border-block-start:1px solid var(--line);backgro
   font-size:15px;padding:12px 18px;cursor:pointer;transition:background .2s,color .2s}
 .combo-list button:hover,.combo-list button.hl{background:var(--gold-glow);color:var(--gold)}
 .field-err{color:#E0746E;font-size:13.5px;min-height:1.1em;margin-block-start:7px;font-weight:400}
+.fld-label{display:block;font-size:13px;color:var(--muted);margin-block:14px 7px;font-weight:400}
+.fld{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:14px;color:var(--ivory);
+  font-family:var(--sans);font-size:16px;padding:14px 16px;transition:border-color .25s,box-shadow .25s}
+.fld:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow)}
+.fld[aria-invalid="true"]{border-color:#E0746E}
+.fld::placeholder{color:#6b6862}
+.pax-row{display:flex;flex-wrap:wrap;gap:8px;margin-block-end:10px}
+.pax-chip,.lug-opt{background:var(--bg);border:1px solid var(--line);border-radius:100px;color:var(--ivory);
+  font-family:var(--sans);font-size:14px;padding:9px 16px;cursor:pointer;transition:border-color .25s,color .25s,background .25s}
+.pax-chip:hover,.lug-opt:hover{border-color:var(--gold)}
+.pax-chip.on,.lug-opt.on{border-color:var(--gold);color:var(--gold);background:var(--gold-glow)}
+.lug-toggle{display:flex;gap:10px;margin-block-end:6px}
+.lug-toggle .lug-opt{flex:1;text-align:center}
+.lug-detail{margin-block-start:12px}
+.lug-hint{font-size:12.5px;color:var(--muted);margin-block-start:8px;line-height:1.5}
+.mstep h3{font-family:var(--serif)}
 .msg-preview{background:var(--bg);border:1px dashed var(--line);border-radius:14px;padding:15px 16px;
   font-size:14px;color:var(--muted);margin-block-start:20px;white-space:pre-line;line-height:1.75}
 .msg-preview b{color:var(--gold);font-weight:500}
@@ -486,7 +537,9 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
     </a>
     <nav class="nav-links" aria-label="ניווט ראשי">
       <a href="#fleet">הרכבים</a>
+      <a href="#gallery">הצי שלנו</a>
       <a href="#airport">שדה התעופה</a>
+      <a href="#daytrip">יום שלם</a>
       <a href="#why">למה אנחנו</a>
       <a href="#areas">אזורי שירות</a>
       <a href="#faq">שאלות נפוצות</a>
@@ -545,11 +598,20 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
   <div class="wrap">
     <div class="sec-head reveal"><span class="eyebrow">הצי שלנו</span>
       <h2>בחרו את הרכב שמתאים לכם</h2>
-      <p>מרכב פרטי ל-4 נוסעים ועד מיניבוס יוקרה להסעות גדולות — לכל נסיעה יש את הרכב הנכון.</p></div>
+      <p>שלוש קטגוריות — מוניות 4–6 נוסעים, מיני-וואן וואנים 6–10, ורכבי הסעות 12–23. לכל נסיעה יש את הרכב הנכון.</p></div>
     <div class="fleet-grid reveal" id="fleetGrid"></div>
   </div>
 </section>
 
+<!-- ===================== real fleet gallery ===================== -->
+<section class="gallery" id="gallery" aria-label="הצי האמיתי שלנו">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="eyebrow">תמונות אמיתיות</span>
+      <h2>הצי שלנו במציאות</h2>
+      <p>אלה הרכבים האמיתיים שלנו — מצולמים בשטח, מטופחים ומוכנים לנסיעה. בלי תמונות סטוק.</p></div>
+    <div class="gallery-grid reveal" id="galleryGrid"></div>
+  </div>
+</section>
 <!-- ===================== airport (natbag) full-bleed banner ===================== -->
 <section class="airport" id="airport" aria-label="הסעות יוקרה לשדה התעופה נתב״ג">
   <div class="airport-bg" aria-hidden="true">
@@ -606,6 +668,17 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
   </div>
 </section>
 
+<!-- ===================== day-trip / group tours banner ===================== -->
+<section class="daytrip" id="daytrip" aria-label="הצמדה ליום שלם וטיולים">
+  <div class="wrap">
+    <div class="daytrip-inner reveal">
+      <span class="eyebrow">יום שלם · קבוצות · טיולים</span>
+      <h2>יום שלם, קבוצה אחת, נהג צמוד</h2>
+      <p>הצמדת רכב ונהג ליום מלא — סיורי תיירים, טיולים וקבוצות. תכנון מסלול גמיש, המתנה בין היעדים ותמחור מותאם ליום.</p>
+      <button class="btn btn-gold" onclick="dayTripWhatsApp()">לתיאום יום טיול / הצמדה ←</button>
+    </div>
+  </div>
+</section>
 <!-- ===================== faq ===================== -->
 <section class="faq" id="faq">
   <div class="wrap">
@@ -666,8 +739,10 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
   <div class="modal" id="modal">
     <button class="modal-close" onclick="closeModal()" aria-label="סגירת חלון ההזמנה">×</button>
     <span class="vehicle-tag" id="vehicleTag">מונית</span>
-    <div class="steps-dots" aria-hidden="true"><i id="dot1" class="active"></i><i id="dot2"></i></div>
-    <div id="step1">
+    <div class="steps-dots" aria-hidden="true"><i id="dot1" class="active"></i><i id="dot2"></i><i id="dot3"></i><i id="dot4"></i></div>
+
+    <!-- step 1: pickup -->
+    <div id="step1" class="mstep">
       <h3 id="modalTitle">מאיפה לאסוף אתכם?</h3>
       <p class="step-sub">כתבו כתובת או בחרו עיר מהרשימה</p>
       <div class="combo">
@@ -678,7 +753,9 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
       <div id="originErr" class="field-err" role="alert" aria-live="assertive"></div>
       <div class="modal-actions"><button class="btn btn-gold" onclick="goStep(2)">המשך →</button></div>
     </div>
-    <div id="step2" style="display:none">
+
+    <!-- step 2: destination -->
+    <div id="step2" class="mstep" style="display:none">
       <h3>לאן ניסע?</h3>
       <p class="step-sub">כתבו יעד או בחרו עיר מהרשימה</p>
       <div class="combo">
@@ -687,9 +764,53 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
         <div class="combo-list" id="destList" role="listbox" aria-label="הצעות ערים"></div>
       </div>
       <div id="destErr" class="field-err" role="alert" aria-live="assertive"></div>
-      <div class="msg-preview" id="msgPreview"></div>
       <div class="modal-actions">
         <button class="btn btn-ghost btn-back" onclick="goStep(1)">→ חזרה</button>
+        <button class="btn btn-gold" onclick="goStep(3)">המשך →</button>
+      </div>
+    </div>
+
+    <!-- step 3: passengers + name + phone -->
+    <div id="step3" class="mstep" style="display:none">
+      <h3>פרטי הנסיעה</h3>
+      <p class="step-sub">כמה נוסעים, ואיך ליצור קשר</p>
+      <label class="fld-label" for="paxInput">מספר נוסעים</label>
+      <div class="pax-row" id="paxRow" role="group" aria-label="מספר נוסעים">
+        <button type="button" class="pax-chip" data-pax="1-4">1–4</button>
+        <button type="button" class="pax-chip" data-pax="5-6">5–6</button>
+        <button type="button" class="pax-chip" data-pax="7-10">7–10</button>
+        <button type="button" class="pax-chip" data-pax="11-16">11–16</button>
+        <button type="button" class="pax-chip" data-pax="17-23">17–23</button>
+      </div>
+      <input id="paxInput" type="text" inputmode="numeric" autocomplete="off" class="fld" placeholder="או הקלידו מספר מדויק" aria-label="מספר נוסעים מדויק" aria-describedby="paxErr" />
+      <div id="paxErr" class="field-err" role="alert" aria-live="assertive"></div>
+      <label class="fld-label" for="nameInput">שם מלא</label>
+      <input id="nameInput" type="text" autocomplete="name" class="fld" placeholder="השם שלכם" aria-describedby="nameErr" />
+      <div id="nameErr" class="field-err" role="alert" aria-live="assertive"></div>
+      <label class="fld-label" for="phoneInput">טלפון</label>
+      <input id="phoneInput" type="tel" autocomplete="tel" inputmode="tel" class="fld" placeholder="050-0000000" aria-describedby="phoneErr" />
+      <div id="phoneErr" class="field-err" role="alert" aria-live="assertive"></div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost btn-back" onclick="goStep(2)">→ חזרה</button>
+        <button class="btn btn-gold" onclick="goStep(4)">המשך →</button>
+      </div>
+    </div>
+
+    <!-- step 4: luggage + preview + send -->
+    <div id="step4" class="mstep" style="display:none">
+      <h3>מטען</h3>
+      <p class="step-sub">יש לכם מזוודות או ציוד? (לא חובה)</p>
+      <div class="lug-toggle" role="group" aria-label="האם יש מטען">
+        <button type="button" class="lug-opt" data-lug="no" onclick="setLuggage('no')">בלי מטען מיוחד</button>
+        <button type="button" class="lug-opt" data-lug="yes" onclick="setLuggage('yes')">יש מטען</button>
+      </div>
+      <div id="lugDetail" class="lug-detail" style="display:none">
+        <input id="lugInput" type="text" autocomplete="off" class="fld" placeholder="לדוגמה: 2 מזוודות גדולות + טרולי" aria-label="פירוט מטען" />
+        <p class="lug-hint">אפשר להשאיר ריק — נשלים יחד בוואטסאפ (מזוודות XL / ג' / טרולי / קרטונים / משלוח).</p>
+      </div>
+      <div class="msg-preview" id="msgPreview"></div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost btn-back" onclick="goStep(3)">→ חזרה</button>
         <button class="btn btn-wa" onclick="sendWhatsApp()">
           <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.413c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24z"/></svg>
           שלח בוואטסאפ
@@ -719,26 +840,39 @@ const CONFIG = {
   ga4Id: "", metaPixelId: "",
 };
 
-/* כל כרטיס רכב: תמונה אמיתית (WebP) + טקסט. msg = איך מתואר הרכב בהודעת הוואטסאפ. */
+/* 3 קטגוריות צי ראשיות (מיוצגות באיורים). subtypes = דגמים בקטגוריה. */
 const VEHICLES = [
-  { key:"taxi4", name:"מונית 4 מקומות", cap:"עד 4 נוסעים", msg:"מונית ל-4 נוסעים",
-    img:"car-4seat", alt:"מונית 4 מקומות — מרצדס שחורה",
-    desc:"הקלאסיקה — מהירה, נוחה וזמינה לכל נסיעה בעיר או מחוצה לה." },
-  { key:"taxi6", name:"מונית 6 מקומות", cap:"עד 6 נוסעים", msg:"מונית ל-6 נוסעים",
-    img:"car-6seat", alt:"מונית 6 מקומות — ג'יפ שחור",
-    desc:"מרווחת יותר — מושלמת לקבוצות, משפחות ומזוודות." },
-  { key:"minibus", name:"מיניבוס / ון", cap:"7–14 נוסעים", msg:"מיניבוס / ון להסעה גדולה",
-    img:"car-minibus", alt:"מיניבוס יוקרה שחור עם פנים קרם",
-    desc:"להסעות גדולות, אירועים וטיולים — כולם נוסעים יחד בנוחות." },
-  { key:"vip", name:"מונית VIP / יוקרה", cap:"שירות פרימיום", msg:"מונית VIP / יוקרה",
-    img:"car-4seat", alt:"רכב VIP יוקרתי שחור", vip:true,
-    desc:"רכב יוקרה לאירועים, אורחים עסקיים והגעה בסטייל." },
-  { key:"access", name:"מונית נגישה", cap:"כיסא גלגלים", msg:"מונית נגישה (מותאמת לכיסא גלגלים)",
-    img:"car-access", alt:"מונית נגישה עם רמפה לכיסא גלגלים",
-    desc:"רכב מותאם ומאובזר ברמפה להסעת נוסעים עם מוגבלות בנוחות מלאה." },
+  { key:"taxi", name:"מוניות 4–6 נוסעים", cap:"עד 6 נוסעים", msg:"מונית (4–6 נוסעים)",
+    img:"car-4seat", alt:"מונית פרטית",
+    desc:"כל המוניות לבנות ומטופחות — רגילות ל-4 מושבים, מוניות 6 מרווחות, וגרסה נגישה מאובזרת רמפה לכיסא גלגלים.",
+    subtypes:["מונית 4 מקומות (לבנה)","מונית 6 מקומות (לבנה)","מונית נגישה לכיסא גלגלים"] },
+  { key:"van", name:"מיני-וואן ו-ואנים 6–10", cap:"6 עד 10 נוסעים", msg:"מיני-וואן / ואן (6–10 נוסעים)",
+    img:"car-minibus", alt:"ואן יוקרה שחור",
+    desc:"מיני-וואן ל-6 (סיינה / קרניבל) וואנים שחורים ל-8–10 נוסעים (V-Class, ויטו, ויאנו, טרנספורטר, סטריה). מושלם למשפחות, מטענים וקבוצות.",
+    subtypes:["מיני-וואן: טויוטה סיינה","מיני-וואן: קיה קרניבל","ואן: ויטו / ויאנו / וי-קלאס","ואן: טרנספורטר / יונדאי סטריה"] },
+  { key:"shuttle", name:"רכבי הסעות 12–23", cap:"12 עד 23 נוסעים", msg:"רכב הסעות (12–23 נוסעים)",
+    img:"car-minibus", alt:"רכב הסעות גדול", vip:true,
+    desc:"רכבי הסעה גדולים לקבוצות, אירועים וטיולים — ספרינטר, קרפטר, טרנזיט, סוואנה ואיווקו. הבדלי מחיר משמעותיים בין הדגמים — נתאים לכם בדיוק את הרכב.",
+    subtypes:["12 נוסעים — לימו מלא","16 נוסעים — חצי לימו","19 / 20 נוסעים","23 נוסעים","דגמים: ספרינטר / קרפטר / טרנזיט / סוואנה / איווקו"] },
 ];
 
-let state = { vehicle:null, origin:"", destination:"", step:1 };
+/* גלריית הצי האמיתי — תמונות אמיתיות (WebP). */
+const GALLERY = [
+  { slug:"real-mercedes", name:"Mercedes EQE", cap:"מונית · עד 4 נוסעים",
+    desc:"מונית יוקרה חשמלית לבנה — נסיעה שקטה, נקייה ומטופחת.",
+    shots:["real-mercedes-1","real-mercedes-2","real-mercedes-3"] },
+  { slug:"real-sienna", name:"Toyota Sienna", cap:"מיני-וואן · עד 6 נוסעים",
+    desc:"מיני-וואן לבן ומרווח — מושלם למשפחות, מזוודות וקבוצות קטנות.",
+    shots:["real-sienna-1","real-sienna-2","real-sienna-3"] },
+  { slug:"real-vclass", name:"Mercedes V-Class", cap:"ואן · עד 8 נוסעים",
+    desc:"ואן שחור יוקרתי עם אבזור פרימיום — הסעות VIP ואורחים עסקיים.",
+    shots:["real-vclass-1","real-vclass-2","real-vclass-3"] },
+  { slug:"real-sprinter", name:"Mercedes Sprinter", cap:"הסעות · עד 20 נוסעים",
+    desc:"רכב הסעה גדול — קבוצות, אירועים וטיולים בנוחות מלאה.",
+    shots:["real-sprinter-1","real-sprinter-2","real-sprinter-3"] },
+];
+
+let state = { vehicle:null, origin:"", destination:"", passengers:"", name:"", phone:"", luggage:"", step:1 };
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 
@@ -755,19 +889,36 @@ function renderFleet(){
       <div class="car-body">
         <h3>${esc(v.name)}</h3>
         <p>${esc(v.desc)}</p>
+        <ul class="car-subtypes">${(v.subtypes||[]).map(s=>`<li>${esc(s)}</li>`).join("")}</ul>
         <button class="btn" onclick="openModal('${v.key}')" aria-label="הזמנת ${esc(v.name)}">הזמן ${esc(v.name)} ←</button>
       </div>
     </article>`).join("");
+}
+function renderGallery(){
+  const g=$("galleryGrid"); if(!g)return;
+  g.innerHTML = GALLERY.map(m => `
+    <figure class="gcard">
+      <div class="gcard-media">
+        <img src="assets/${m.shots[0]}-600.webp"
+             srcset="assets/${m.shots[0]}-600.webp 600w, assets/${m.shots[0]}-1000.webp 1000w"
+             sizes="(max-width:560px) 92vw, 340px"
+             width="1000" height="750" loading="lazy" decoding="async" alt="${esc(m.name)} — ${esc(m.cap)}" />
+      </div>
+      <figcaption>
+        <div class="gcard-head"><h3>${esc(m.name)}</h3><span>${esc(m.cap)}</span></div>
+        <p>${esc(m.desc)}</p>
+      </figcaption>
+    </figure>`).join("");
 }
 function renderAreas(){ $("areaChips").innerHTML = CONFIG.cities.map(c=>`<span>${esc(c)}</span>`).join(""); }
 
 /* ⚠️ אם משנים שאלה כאן — לעדכן גם את ה-FAQPage JSON-LD בראש המסמך (חייב להיות זהה). */
 const FAQS=[
-  ["איך מזמינים מונית?","בוחרים סוג רכב, ממלאים מאיפה ולאן — והבקשה נפתחת אצלכם בוואטסאפ מוכנה לשליחה. אפשר גם ללחוץ על כפתור הוואטסאפ הצף בכל רגע."],
-  ["האם השירות זמין 24/7?","כן. אנחנו זמינים מסביב לשעון, כל ימות השבוע, כולל לילות, סופי שבוע וחגים."],
-  ["אילו סוגי רכבים יש?","מוניות ל-4 ול-6 נוסעים, מיניבוס/ון להסעות גדולות, רכבי VIP יוקרתיים, ומוניות נגישות לכיסא גלגלים."],
-  ["האם אתם נוסעים לשדה התעופה?","בהחלט. נסיעות לנתב\"ג ובחזרה בכל שעה, עם אפשרות לתיאום מראש כדי שלא תפספסו טיסה."],
-  ["כמה עולה נסיעה?","המחיר תלוי במרחק ובסוג הרכב. שלחו לנו את המוצא והיעד בוואטסאפ ותקבלו הצעת מחיר מהירה וברורה מראש."],
+  ["איך מזמינים מונית או רכב הסעה?","בוחרים קטגוריית רכב (מונית, ואן או רכב הסעות) ואת הדגם, ממלאים מאיפה ולאן, כמה נוסעים, שם וטלפון ופרטי מטען — והבקשה נפתחת אצלכם בוואטסאפ מוכנה לשליחה. אפשר גם ללחוץ על כפתור הוואטסאפ הצף בכל רגע."],
+  ["אילו סוגי רכבים יש בצי?","שלוש קטגוריות: מוניות ל-4 ו-6 נוסעים (כולל מונית נגישה לכיסא גלגלים), מיני-וואן וואנים ל-6 עד 10 נוסעים (סיינה, קרניבל, V-Class, ויטו, ויאנו ועוד), ורכבי הסעות גדולים ל-12 עד 23 נוסעים (ספרינטר, קרפטר, טרנזיט ועוד) — בתצורות לימו וחצי-לימו."],
+  ["אפשר להצמיד רכב ונהג ליום שלם או לטיול?","בהחלט. אנחנו מציעים הצמדת רכב ונהג ליום מלא לקבוצות תיירים, טיולים ואירועים, עם מסלול גמיש ותמחור מותאם ליום. שלחו לנו את התאריך, מספר המשתתפים והמסלול בוואטסאפ ונחזור עם הצעה."],
+  ["יש הבדלי מחיר בין הדגמים?","כן. בעיקר ברכבי ההסעות הגדולים יש הבדלים משמעותיים בין הדגמים והתצורות (12 / 16 / 19 / 20 / 23 נוסעים), וגם בין מיני-וואן לוואן. שלחו לנו את הפרטים בוואטסאפ ותקבלו הצעת מחיר מדויקת מראש."],
+  ["השירות זמין 24/7 וגם לשדה התעופה?","כן — זמינים מסביב לשעון, כל ימות השבוע, כולל לילות וחגים, עם נסיעות לנתב\"ג ובחזרה ואפשרות לתיאום מראש כדי שלא תפספסו טיסה."],
 ];
 function renderFAQ(){
   $("faqList").innerHTML = FAQS.map(([q,a],i)=>`
@@ -780,18 +931,20 @@ function toggleFaq(btn){
   btn.setAttribute("aria-expanded",open); ans.style.maxHeight = open ? ans.scrollHeight+"px" : null;
 }
 
-/* ---------- modal + two-step flow ---------- */
+/* ---------- modal: 4-step booking form ---------- */
 let lastFocus=null;
 function setFieldError(inputId,errId,msg){
   const inp=$(inputId),err=$(errId);
-  if(msg){ inp.setAttribute("aria-invalid","true"); err.textContent=msg; inp.focus(); }
-  else { inp.setAttribute("aria-invalid","false"); err.textContent=""; }
+  if(msg){ if(inp)inp.setAttribute("aria-invalid","true"); err.textContent=msg; if(inp)inp.focus(); }
+  else { if(inp)inp.setAttribute("aria-invalid","false"); err.textContent=""; }
 }
 function openModal(key){
-  state.vehicle=VEHICLES.find(v=>v.key===key); state.origin=""; state.destination=""; state.step=1;
+  state={ vehicle:VEHICLES.find(v=>v.key===key), origin:"", destination:"", passengers:"", name:"", phone:"", luggage:"", step:1 };
   $("vehicleTag").textContent=state.vehicle.name;
-  $("originInput").value=""; $("destInput").value="";
-  setFieldError("originInput","originErr",null); setFieldError("destInput","destErr",null);
+  ["originInput","destInput","paxInput","nameInput","phoneInput","lugInput"].forEach(id=>{ if($(id))$(id).value=""; });
+  ["originErr","destErr","paxErr","nameErr","phoneErr"].forEach((e,i)=>{ const ids=["originInput","destInput","paxInput","nameInput","phoneInput"]; setFieldError(ids[i],e,null); });
+  document.querySelectorAll(".pax-chip,.lug-opt").forEach(b=>b.classList.remove("on"));
+  $("lugDetail").style.display="none";
   showStep(1);
   lastFocus=document.activeElement;
   const ov=$("overlay"); ov.classList.add("show"); ov.setAttribute("aria-hidden","false");
@@ -803,33 +956,70 @@ function closeModal(){
   document.body.classList.remove("locked"); if(lastFocus)lastFocus.focus();
 }
 function showStep(n){
-  state.step=n; $("step1").style.display=n===1?"block":"none"; $("step2").style.display=n===2?"block":"none";
-  $("dot1").classList.toggle("active",n>=1); $("dot2").classList.toggle("active",n>=2);
-  if(n===2){ updatePreview(); setTimeout(()=>$("destInput").focus(),70); }
+  state.step=n;
+  for(let i=1;i<=4;i++){ $("step"+i).style.display=i===n?"block":"none"; $("dot"+i).classList.toggle("active",n>=i); }
+  if(n===4){ updatePreview(); }
+  const focusMap={1:"originInput",2:"destInput",3:"paxInput"};
+  if(focusMap[n])setTimeout(()=>$(focusMap[n]).focus(),70);
 }
 function goStep(n){
-  if(n===2){
-    const v=$("originInput").value.trim();
-    if(!v){ setFieldError("originInput","originErr","נא להזין כתובת מוצא"); return; }
-    setFieldError("originInput","originErr",null); state.origin=v;
+  // validate forward transitions
+  if(n>=2){ const v=$("originInput").value.trim(); if(!v){ showStep(1); setFieldError("originInput","originErr","נא להזין כתובת מוצא"); return; } state.origin=v; }
+  if(n>=3){ const v=$("destInput").value.trim(); if(!v){ showStep(2); setFieldError("destInput","destErr","נא להזין יעד"); return; } state.destination=v; }
+  if(n>=4){
+    const pax=$("paxInput").value.trim()||state.passengers;
+    if(!pax){ showStep(3); setFieldError("paxInput","paxErr","נא לבחור או להקליד מספר נוסעים"); return; }
+    state.passengers=pax;
+    const name=$("nameInput").value.trim();
+    if(!name){ showStep(3); setFieldError("nameInput","nameErr","נא להזין שם"); return; }
+    state.name=name;
+    const phone=$("phoneInput").value.trim();
+    if(!phone||phone.replace(/\D/g,"").length<9){ showStep(3); setFieldError("phoneInput","phoneErr","נא להזין מספר טלפון תקין"); return; }
+    state.phone=phone;
   }
   showStep(n);
 }
+function pickPax(val,btn){
+  state.passengers=val; $("paxInput").value=val;
+  document.querySelectorAll(".pax-chip").forEach(b=>b.classList.toggle("on",b===btn));
+  setFieldError("paxInput","paxErr",null);
+}
+function setLuggage(val){
+  document.querySelectorAll(".lug-opt").forEach(b=>b.classList.toggle("on",b.dataset.lug===val));
+  $("lugDetail").style.display = val==="yes" ? "block" : "none";
+  state.luggage = val==="yes" ? ($("lugInput").value.trim()||"יש מטען") : "ללא מטען מיוחד";
+  updatePreview();
+  if(val==="yes")setTimeout(()=>$("lugInput").focus(),60);
+}
+function buildMessage(){
+  const lug = state.luggage || ($("lugInput") && $("lugInput").value.trim()) || "";
+  return `תודה שיצרת קשר עם Horian Premium!\nלביצוע הזמנה ריכזנו את הפרטים:\n\n`+
+    `שם לקוח: ${state.name}\nטלפון: ${state.phone}\n`+
+    `כתובת איסוף: ${state.origin}\nיעד: ${state.destination}\n`+
+    `מספר נוסעים: ${state.passengers}\nרכב מבוקש: ${state.vehicle.msg}\n`+
+    `מטען: ${lug||"—"}\n\n`+
+    `— להשלמה (מחקו את מה שלא רלוונטי) —\nמזוודות XL: \nמזוודות ג': \nטרולי: \nקרטונים: \nמשלוח: \nשונות: \n\n`+
+    `הצעת מחיר תישלח בהתאם לנתונים. תודה!`;
+}
 function updatePreview(){
-  state.destination=$("destInput").value.trim();
-  $("msgPreview").innerHTML=`ההודעה שתישלח:\n<b>שלום, מעוניין/ת להזמין ${esc(state.vehicle.msg)}.</b>\n`+
-    `מוצא: <b>${esc(state.origin||"—")}</b>\nיעד: <b>${esc(state.destination||"—")}</b>\nמתי: עכשיו`;
+  if($("lugInput") && $("lugInput").offsetParent!==null){ const t=$("lugInput").value.trim(); if(t)state.luggage=t; }
+  const m=$("msgPreview");
+  m.innerHTML = `ההודעה שתישלח:\n`+esc(buildMessage()).replace(/(שם לקוח:|טלפון:|כתובת איסוף:|יעד:|מספר נוסעים:|רכב מבוקש:|מטען:)/g,"<b>$1</b>");
 }
 function buildLink(text){ return `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(text)}`; }
 function sendWhatsApp(){
-  state.destination=$("destInput").value.trim();
-  if(!state.destination){ setFieldError("destInput","destErr","נא להזין כתובת יעד"); return; }
-  setFieldError("destInput","destErr",null);
-  const text=`שלום, מעוניין/ת להזמין ${state.vehicle.msg}.\nמוצא: ${state.origin}\nיעד: ${state.destination}\nמתי: עכשיו`;
-  track("lead_whatsapp",{vehicle:state.vehicle.key,origin:state.origin,destination:state.destination});
+  if($("lugInput") && $("lugInput").offsetParent!==null){ const t=$("lugInput").value.trim(); if(t)state.luggage=t; }
+  if(!state.luggage)state.luggage="ללא מטען מיוחד";
+  const text=buildMessage();
+  track("lead_whatsapp",{vehicle:state.vehicle.key,origin:state.origin,destination:state.destination,passengers:state.passengers});
   window.open(buildLink(text),"_blank"); closeModal();
 }
 function generalWhatsApp(){ track("lead_whatsapp_general",{}); window.open(buildLink("שלום, אשמח לפרטים ולהזמנת מונית."),"_blank"); }
+function dayTripWhatsApp(){
+  track("lead_daytrip",{});
+  const t="שלום Horian Premium! מעוניין/ת בהצמדת רכב ונהג ליום שלם / טיול קבוצתי.\nתאריך: \nמספר משתתפים: \nנקודת יציאה: \nמסלול / יעדים מבוקשים: \nשעת התחלה משוערת: \nאשמח להצעת מחיר ליום מלא. תודה!";
+  window.open(buildLink(t),"_blank");
+}
 
 function track(event,params){
   try{ window.dataLayer=window.dataLayer||[]; window.dataLayer.push({event,...params});
@@ -951,10 +1141,24 @@ function setupReveals(){
   document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
 }
 
+/* ---------- booking form field wiring ---------- */
+function setupBookingFields(){
+  document.querySelectorAll(".pax-chip").forEach(btn=>
+    btn.addEventListener("click",()=>pickPax(btn.dataset.pax,btn)));
+  const pax=$("paxInput");
+  if(pax)pax.addEventListener("input",()=>{
+    document.querySelectorAll(".pax-chip").forEach(b=>b.classList.remove("on"));
+    state.passengers=pax.value.trim(); setFieldError("paxInput","paxErr",null);
+  });
+  const lug=$("lugInput");
+  if(lug)lug.addEventListener("input",()=>{ state.luggage=lug.value.trim()||"יש מטען"; updatePreview(); });
+  const name=$("nameInput"); if(name)name.addEventListener("input",()=>setFieldError("nameInput","nameErr",null));
+  const phone=$("phoneInput"); if(phone)phone.addEventListener("input",()=>setFieldError("phoneInput","phoneErr",null));
+}
 /* ---------- init ---------- */
-renderFleet(); renderAreas(); renderFAQ(); applyConfig();
+renderFleet(); renderGallery(); renderAreas(); renderFAQ(); applyConfig();
 setupCombo("originInput","originList"); setupCombo("destInput","destList");
-setupReveals(); setupA11yWidget();
+setupReveals(); setupA11yWidget(); setupBookingFields();
 
 // hero underline draw (hero text itself is visible from first paint via CSS — LCP safe)
 requestAnimationFrame(()=>{ const a=$("accentWord"); if(a)a.classList.add("in"); });

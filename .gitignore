@@ -3,9 +3,17 @@ node_modules/
 package.json
 package-lock.json
 
-# original heavy source images (WebP versions in assets/ are what ship)
-Logo.jpg
-*.png
+# original heavy source images at repo ROOT (WebP versions in assets/ ship)
+/Logo.jpg
+/*.png
+
+# source photo folders (real photos) — converted WebP live in assets/, originals not shipped
+/מרסדס 4 מקומות/
+/סיינה 6 מקומות/
+/וי קלאס שחור 8 מקומות/
+/ספרונטר 20 מקומות/
+*.jpeg
+*.jpg
 
 # OS
 Thumbs.db
