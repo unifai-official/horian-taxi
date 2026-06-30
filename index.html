@@ -315,6 +315,26 @@ header.scrolled{background:rgba(11,11,13,.9);border-block-end-color:var(--line);
   .airport{min-height:0;aspect-ratio:1734/907}
   .airport-cta{display:none}
 }
+/* ====================== fleet featured image + tabs ====================== */
+.fleet-hero{position:relative;max-width:1080px;margin:0 auto 40px;border-radius:var(--radius);overflow:hidden;
+  border:1px solid var(--line);box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.fleet-hero img{width:100%;height:auto;display:block;aspect-ratio:16/10;object-fit:cover}
+.fleet-hero-cap{position:absolute;inset-block-end:0;inset-inline:0;padding:34px 26px 18px;
+  background:linear-gradient(to top,rgba(8,8,10,.92),transparent);display:flex;flex-direction:column;gap:3px}
+.fleet-hero-cap span{font-size:12px;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;font-weight:500}
+.fleet-hero-cap b{font-family:var(--serif);font-weight:700;font-size:clamp(17px,2.4vw,22px);color:var(--ivory)}
+.fleet-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-block-end:40px}
+.fleet-tab{background:var(--bg-elev);border:1px solid var(--line);border-radius:100px;color:var(--ivory);
+  font-family:var(--sans);font-size:15px;font-weight:500;padding:12px 26px;cursor:pointer;
+  transition:border-color .3s,color .3s,background .3s}
+.fleet-tab:hover{border-color:var(--gold);color:var(--gold)}
+.fleet-tab.on{background:linear-gradient(135deg,var(--gold),var(--gold-deep));color:#16130E;border-color:transparent}
+@media(max-width:560px){.fleet-tab{padding:11px 18px;font-size:14px}}
+/* real-photo cards fill the media (no floating/halo), illustration cards keep contain */
+.car-media.media-photo{background:#0f0f12}
+.car-media.media-photo::before,.car-media.media-photo::after{display:none}
+.car-media.media-photo img.is-real{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;padding:0;
+  filter:none;transition:transform .6s var(--ease)}
 /* ====================== car subtypes list ====================== */
 .car-subtypes{list-style:none;margin:0 0 20px;padding:0;display:flex;flex-direction:column;gap:7px}
 .car-subtypes li{position:relative;padding-inline-start:18px;font-size:13.5px;color:var(--muted);line-height:1.4}
@@ -350,6 +370,25 @@ header.scrolled{background:rgba(11,11,13,.9);border-block-end-color:var(--line);
 .daytrip h2{font-family:var(--serif);font-weight:700;font-size:clamp(28px,4vw,42px);line-height:1.12;max-width:680px}
 .daytrip p{color:var(--muted);font-size:17px;margin-block:16px 28px;max-width:620px;line-height:1.7}
 .daytrip .btn{font-size:16px}
+/* ====================== drivers recruitment ====================== */
+.recruit{padding-block:90px;border-block-start:1px solid var(--line)}
+.recruit-inner{position:relative;max-width:var(--maxw);margin-inline:auto;border-radius:22px;overflow:hidden;
+  border:1px solid rgba(201,205,211,.28);
+  background:linear-gradient(120deg,#101216,#16181d 55%,#0f1013);
+  padding:clamp(34px,5vw,58px);display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap}
+.recruit-inner::before{content:"";position:absolute;inset-block-end:-45%;inset-inline-end:-8%;
+  width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,var(--silver-glow),transparent 62%);
+  filter:blur(20px);z-index:0}
+.recruit-inner>*{position:relative;z-index:1}
+.recruit-copy{max-width:640px}
+.recruit .eyebrow{color:var(--silver);margin-block-end:12px}
+.recruit h2{font-family:var(--serif);font-weight:700;font-size:clamp(26px,3.6vw,38px);line-height:1.15}
+.recruit p{color:var(--muted);font-size:16px;margin-block-start:14px;line-height:1.7;max-width:560px}
+.recruit-points{display:flex;gap:22px;flex-wrap:wrap;margin-block-start:18px;font-size:14px;color:var(--ivory)}
+.recruit-points span{display:inline-flex;align-items:center;gap:7px}
+.recruit-points span::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.recruit .btn{flex-shrink:0;font-size:16px}
+@media(max-width:760px){.recruit-inner{flex-direction:column;align-items:flex-start}.recruit .btn{width:100%}}
 /* ====================== why ====================== */
 .why{padding-block:100px;border-block-start:1px solid var(--line)}
 .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-block-start:52px}
@@ -537,9 +576,9 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
     </a>
     <nav class="nav-links" aria-label="ניווט ראשי">
       <a href="#fleet">הרכבים</a>
-      <a href="#gallery">הצי שלנו</a>
       <a href="#airport">שדה התעופה</a>
       <a href="#daytrip">יום שלם</a>
+      <a href="#recruit">דרושים נהגים</a>
       <a href="#why">למה אנחנו</a>
       <a href="#areas">אזורי שירות</a>
       <a href="#faq">שאלות נפוצות</a>
@@ -599,17 +638,21 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
     <div class="sec-head reveal"><span class="eyebrow">הצי שלנו</span>
       <h2>בחרו את הרכב שמתאים לכם</h2>
       <p>שלוש קטגוריות — מוניות 4–6 נוסעים, מיני-וואן וואנים 6–10, ורכבי הסעות 12–23. לכל נסיעה יש את הרכב הנכון.</p></div>
-    <div class="fleet-grid reveal" id="fleetGrid"></div>
-  </div>
-</section>
 
-<!-- ===================== real fleet gallery ===================== -->
-<section class="gallery" id="gallery" aria-label="הצי האמיתי שלנו">
-  <div class="wrap">
-    <div class="sec-head reveal"><span class="eyebrow">תמונות אמיתיות</span>
-      <h2>הצי שלנו במציאות</h2>
-      <p>אלה הרכבים האמיתיים שלנו — מצולמים בשטח, מטופחים ומוכנים לנסיעה. בלי תמונות סטוק.</p></div>
-    <div class="gallery-grid reveal" id="galleryGrid"></div>
+    <!-- main featured taxi image -->
+    <div class="fleet-hero reveal">
+      <img src="assets/real-mercedes-1-1000.webp"
+           srcset="assets/real-mercedes-1-600.webp 600w, assets/real-mercedes-1-1000.webp 1000w"
+           sizes="(max-width:1100px) 94vw, 1040px"
+           width="1000" height="750" loading="lazy" decoding="async"
+           alt="מונית יוקרה מרצדס EQE לבנה של Horian Premium" />
+      <div class="fleet-hero-cap"><span>הצי שלנו במציאות</span><b>מוניות, וואנים ורכבי הסעות — מצולמים בשטח</b></div>
+    </div>
+
+    <!-- tabs -->
+    <div class="fleet-tabs reveal" id="fleetTabs" role="tablist" aria-label="קטגוריות רכב"></div>
+    <!-- cards for active tab -->
+    <div class="fleet-grid reveal" id="fleetGrid"></div>
   </div>
 </section>
 <!-- ===================== airport (natbag) full-bleed banner ===================== -->
@@ -688,6 +731,25 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
 </section>
 </main>
 
+<!-- ===================== drivers recruitment ===================== -->
+<section class="recruit" id="recruit" aria-label="דרושים נהגי מוניות">
+  <div class="wrap">
+    <div class="recruit-inner reveal">
+      <div class="recruit-copy">
+        <span class="eyebrow">דרושים</span>
+        <h2>מחפשים נהגי מוניות והסעות</h2>
+        <p>מצטרפים לצי של Horian Premium — עבודה גמישה, נסיעות קבועות ולקוחות איכותיים. בעלי מונית, ואן או רכב הסעות מוזמנים לפנות.</p>
+        <div class="recruit-points">
+          <span>שעות גמישות</span>
+          <span>נסיעות קבועות</span>
+          <span>תשלום הוגן</span>
+          <span>יחס אישי</span>
+        </div>
+      </div>
+      <button class="btn btn-gold" onclick="openRecruit()">הצטרפו כנהגים ←</button>
+    </div>
+  </div>
+</section>
 <!-- ===================== footer ===================== -->
 <footer>
   <div class="wrap reveal">
@@ -820,6 +882,29 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
   </div>
 </div>
 
+<!-- ===================== recruitment modal ===================== -->
+<div class="overlay" id="recruitOverlay" role="dialog" aria-modal="true" aria-labelledby="recruitTitle" aria-hidden="true">
+  <div class="modal" id="recruitModal">
+    <button class="modal-close" onclick="closeRecruit()" aria-label="סגירת חלון ההצטרפות">×</button>
+    <span class="vehicle-tag">דרושים נהגים</span>
+    <h3 id="recruitTitle">הצטרפו כנהגים</h3>
+    <p class="step-sub">השאירו פרטים ונחזור אליכם — או שלחו ישירות בוואטסאפ.</p>
+    <label class="fld-label" for="recName">שם מלא</label>
+    <input id="recName" type="text" autocomplete="name" class="fld" placeholder="השם שלכם" aria-describedby="recNameErr" />
+    <div id="recNameErr" class="field-err" role="alert" aria-live="assertive"></div>
+    <label class="fld-label" for="recPhone">טלפון</label>
+    <input id="recPhone" type="tel" autocomplete="tel" inputmode="tel" class="fld" placeholder="050-0000000" aria-describedby="recPhoneErr" />
+    <div id="recPhoneErr" class="field-err" role="alert" aria-live="assertive"></div>
+    <label class="fld-label" for="recVehicle">סוג רכב / ניסיון</label>
+    <input id="recVehicle" type="text" autocomplete="off" class="fld" placeholder="לדוגמה: מונית 4 מקומות, 3 שנות ניסיון" aria-label="סוג רכב וניסיון" />
+    <div class="modal-actions">
+      <button class="btn btn-wa" onclick="sendRecruit()" style="flex:1">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.413c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24z"/></svg>
+        שלח בוואטסאפ
+      </button>
+    </div>
+  </div>
+</div>
 <script>
 /* ============================================================= */
 /*  CONFIG  —  ⚠️ ערכי כאן בלבד את פרטי הלקוח                      */
@@ -840,75 +925,86 @@ const CONFIG = {
   ga4Id: "", metaPixelId: "",
 };
 
-/* 3 קטגוריות צי ראשיות (מיוצגות באיורים). subtypes = דגמים בקטגוריה. */
-const VEHICLES = [
-  { key:"taxi", name:"מוניות 4–6 נוסעים", cap:"עד 6 נוסעים", msg:"מונית (4–6 נוסעים)",
-    img:"car-4seat", alt:"מונית פרטית",
-    desc:"כל המוניות לבנות ומטופחות — רגילות ל-4 מושבים, מוניות 6 מרווחות, וגרסה נגישה מאובזרת רמפה לכיסא גלגלים.",
-    subtypes:["מונית 4 מקומות (לבנה)","מונית 6 מקומות (לבנה)","מונית נגישה לכיסא גלגלים"] },
-  { key:"van", name:"מיני-וואן ו-ואנים 6–10", cap:"6 עד 10 נוסעים", msg:"מיני-וואן / ואן (6–10 נוסעים)",
-    img:"car-minibus", alt:"ואן יוקרה שחור",
-    desc:"מיני-וואן ל-6 (סיינה / קרניבל) וואנים שחורים ל-8–10 נוסעים (V-Class, ויטו, ויאנו, טרנספורטר, סטריה). מושלם למשפחות, מטענים וקבוצות.",
-    subtypes:["מיני-וואן: טויוטה סיינה","מיני-וואן: קיה קרניבל","ואן: ויטו / ויאנו / וי-קלאס","ואן: טרנספורטר / יונדאי סטריה"] },
-  { key:"shuttle", name:"רכבי הסעות 12–23", cap:"12 עד 23 נוסעים", msg:"רכב הסעות (12–23 נוסעים)",
+/* קטגוריות = טאבים. כל קטגוריה מכילה דגמים (כרטיסים עם תמונה). */
+const CATEGORIES = [
+  { key:"taxi",    title:"מוניות 4–6 נוסעים", short:"מוניות" },
+  { key:"van",     title:"מיני-וואן וואנים 6–10", short:"וואנים" },
+  { key:"shuttle", title:"רכבי הסעות 12–23", short:"הסעות" },
+];
+
+/* דגמים. real=true → תמונה אמיתית (assets/real-...-600/1000.webp). אחרת איור (assets/<img>-480/760.webp). */
+const MODELS = [
+  // מוניות
+  { cat:"taxi", key:"taxi4", name:"מונית 4 מקומות", cap:"עד 4 נוסעים", msg:"מונית 4 מקומות (לבנה)",
+    real:true, img:"real-mercedes-1", alt:"מונית מרצדס EQE לבנה",
+    desc:"מונית יוקרה חשמלית לבנה — נסיעה שקטה, נקייה ומטופחת לכל יום." },
+  { cat:"taxi", key:"taxi6", name:"מונית 6 מקומות", cap:"עד 6 נוסעים", msg:"מונית 6 מקומות (לבנה)",
+    img:"car-6seat", alt:"מונית 6 מקומות",
+    desc:"מרווחת יותר — מושלמת לקבוצות, משפחות ומזוודות." },
+  { cat:"taxi", key:"access", name:"מונית נגישה", cap:"כיסא גלגלים", msg:"מונית נגישה (מותאמת לכיסא גלגלים)",
+    img:"car-access", alt:"מונית נגישה עם רמפה",
+    desc:"רכב מותאם ומאובזר ברמפה להסעת נוסעים עם מוגבלות בנוחות מלאה." },
+  // וואנים
+  { cat:"van", key:"sienna", name:"טויוטה סיינה", cap:"מיני-וואן · עד 6", msg:"מיני-וואן טויוטה סיינה (6 נוסעים)",
+    real:true, img:"real-sienna-1", alt:"מיני-וואן טויוטה סיינה לבנה",
+    desc:"מיני-וואן לבן ומרווח — מושלם למשפחות, מזוודות וקבוצות קטנות." },
+  { cat:"van", key:"vclass", name:"מרצדס V-Class", cap:"ואן · עד 8", msg:"ואן מרצדס V-Class (8 נוסעים)",
+    real:true, img:"real-vclass-1", alt:"ואן מרצדס V-Class שחור",
+    desc:"ואן שחור יוקרתי עם אבזור פרימיום — הסעות VIP ואורחים עסקיים." },
+  { cat:"van", key:"van10", name:"ויטו / ויאנו / סטריה", cap:"ואן · 8–10", msg:"ואן (ויטו / ויאנו / טרנספורטר / סטריה)",
+    img:"car-minibus", alt:"ואן הסעות שחור",
+    desc:"ואנים נוספים ל-8–10 נוסעים (ויטו, ויאנו, טרנספורטר, יונדאי סטריה) — מתאספים לרכבי הסעות עם אבזור משתנה." },
+  // הסעות
+  { cat:"shuttle", key:"sprinter", name:"מרצדס ספרינטר", cap:"הסעות · עד 20", msg:"רכב הסעות ספרינטר (עד 20 נוסעים)",
+    real:true, img:"real-sprinter-1", alt:"רכב הסעות מרצדס ספרינטר", vip:true,
+    desc:"רכב הסעה גדול ל-20 נוסעים — קבוצות, אירועים וטיולים בנוחות מלאה." },
+  { cat:"shuttle", key:"limo", name:"לימו / חצי לימו", cap:"12 · 16 נוסעים", msg:"רכב הסעות — לימו (12) / חצי לימו (16)",
+    img:"car-minibus", alt:"רכב הסעות לימו",
+    desc:"תצורת לימו מלא (12 נוסעים) וחצי לימו (16) — ספרינטר / קרפטר / טרנזיט ברמת גימור גבוהה." },
+  { cat:"shuttle", key:"coach", name:"רכב הסעות 19–23", cap:"19 · 20 · 23", msg:"רכב הסעות גדול (19–23 נוסעים)",
     img:"car-minibus", alt:"רכב הסעות גדול", vip:true,
-    desc:"רכבי הסעה גדולים לקבוצות, אירועים וטיולים — ספרינטר, קרפטר, טרנזיט, סוואנה ואיווקו. הבדלי מחיר משמעותיים בין הדגמים — נתאים לכם בדיוק את הרכב.",
-    subtypes:["12 נוסעים — לימו מלא","16 נוסעים — חצי לימו","19 / 20 נוסעים","23 נוסעים","דגמים: ספרינטר / קרפטר / טרנזיט / סוואנה / איווקו"] },
+    desc:"הרכבים הגדולים — 19, 20 ו-23 נוסעים (ספרינטר / קרפטר / טרנזיט / סוואנה / איווקו). יש הבדלי מחיר משמעותיים בין הדגמים." },
 ];
-
-/* גלריית הצי האמיתי — תמונות אמיתיות (WebP). */
-const GALLERY = [
-  { slug:"real-mercedes", name:"Mercedes EQE", cap:"מונית · עד 4 נוסעים",
-    desc:"מונית יוקרה חשמלית לבנה — נסיעה שקטה, נקייה ומטופחת.",
-    shots:["real-mercedes-1","real-mercedes-2","real-mercedes-3"] },
-  { slug:"real-sienna", name:"Toyota Sienna", cap:"מיני-וואן · עד 6 נוסעים",
-    desc:"מיני-וואן לבן ומרווח — מושלם למשפחות, מזוודות וקבוצות קטנות.",
-    shots:["real-sienna-1","real-sienna-2","real-sienna-3"] },
-  { slug:"real-vclass", name:"Mercedes V-Class", cap:"ואן · עד 8 נוסעים",
-    desc:"ואן שחור יוקרתי עם אבזור פרימיום — הסעות VIP ואורחים עסקיים.",
-    shots:["real-vclass-1","real-vclass-2","real-vclass-3"] },
-  { slug:"real-sprinter", name:"Mercedes Sprinter", cap:"הסעות · עד 20 נוסעים",
-    desc:"רכב הסעה גדול — קבוצות, אירועים וטיולים בנוחות מלאה.",
-    shots:["real-sprinter-1","real-sprinter-2","real-sprinter-3"] },
-];
-
 let state = { vehicle:null, origin:"", destination:"", passengers:"", name:"", phone:"", luggage:"", step:1 };
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 
+let activeTab = CATEGORIES[0].key;
+function modelImgTag(m){
+  if(m.real){
+    return `<img src="assets/${m.img}-600.webp"
+        srcset="assets/${m.img}-600.webp 600w, assets/${m.img}-1000.webp 1000w"
+        sizes="(max-width:560px) 92vw, 360px" width="1000" height="750"
+        loading="lazy" decoding="async" alt="${esc(m.alt)}" class="is-real" />`;
+  }
+  return `<img src="assets/${m.img}-480.webp"
+      srcset="assets/${m.img}-480.webp 480w, assets/${m.img}-760.webp 760w"
+      sizes="(max-width:560px) 92vw, 360px" width="760" height="475"
+      loading="lazy" decoding="async" alt="${esc(m.alt)}" class="is-illus" />`;
+}
 function renderFleet(){
-  $("fleetGrid").innerHTML = VEHICLES.map(v => `
-    <article class="car-card${v.vip ? " vip" : ""}">
-      <div class="car-media">
-        <span class="car-badge">${esc(v.cap)}</span>
-        <img src="assets/${v.img}-480.webp"
-             srcset="assets/${v.img}-480.webp 480w, assets/${v.img}-760.webp 760w"
-             sizes="(max-width:560px) 92vw, 360px"
-             width="760" height="475" loading="lazy" decoding="async" alt="${esc(v.alt)}" />
+  // tabs
+  $("fleetTabs").innerHTML = CATEGORIES.map(c=>
+    `<button type="button" class="fleet-tab${c.key===activeTab?" on":""}" role="tab"
+      aria-selected="${c.key===activeTab}" data-tab="${c.key}" onclick="selectTab('${c.key}')">${esc(c.title)}</button>`
+  ).join("");
+  // cards for active tab
+  const cards = MODELS.filter(m=>m.cat===activeTab);
+  $("fleetGrid").innerHTML = cards.map(m => `
+    <article class="car-card${m.vip ? " vip" : ""}${m.real?" has-photo":""}">
+      <div class="car-media${m.real?" media-photo":""}">
+        <span class="car-badge">${esc(m.cap)}</span>
+        ${modelImgTag(m)}
       </div>
       <div class="car-body">
-        <h3>${esc(v.name)}</h3>
-        <p>${esc(v.desc)}</p>
-        <ul class="car-subtypes">${(v.subtypes||[]).map(s=>`<li>${esc(s)}</li>`).join("")}</ul>
-        <button class="btn" onclick="openModal('${v.key}')" aria-label="הזמנת ${esc(v.name)}">הזמן ${esc(v.name)} ←</button>
+        <h3>${esc(m.name)}</h3>
+        <p>${esc(m.desc)}</p>
+        <button class="btn" onclick="openModal('${m.key}')" aria-label="הזמנת ${esc(m.name)}">הזמן ${esc(m.name)} ←</button>
       </div>
     </article>`).join("");
 }
-function renderGallery(){
-  const g=$("galleryGrid"); if(!g)return;
-  g.innerHTML = GALLERY.map(m => `
-    <figure class="gcard">
-      <div class="gcard-media">
-        <img src="assets/${m.shots[0]}-600.webp"
-             srcset="assets/${m.shots[0]}-600.webp 600w, assets/${m.shots[0]}-1000.webp 1000w"
-             sizes="(max-width:560px) 92vw, 340px"
-             width="1000" height="750" loading="lazy" decoding="async" alt="${esc(m.name)} — ${esc(m.cap)}" />
-      </div>
-      <figcaption>
-        <div class="gcard-head"><h3>${esc(m.name)}</h3><span>${esc(m.cap)}</span></div>
-        <p>${esc(m.desc)}</p>
-      </figcaption>
-    </figure>`).join("");
+function selectTab(key){
+  activeTab=key; renderFleet();
 }
 function renderAreas(){ $("areaChips").innerHTML = CONFIG.cities.map(c=>`<span>${esc(c)}</span>`).join(""); }
 
@@ -939,7 +1035,7 @@ function setFieldError(inputId,errId,msg){
   else { if(inp)inp.setAttribute("aria-invalid","false"); err.textContent=""; }
 }
 function openModal(key){
-  state={ vehicle:VEHICLES.find(v=>v.key===key), origin:"", destination:"", passengers:"", name:"", phone:"", luggage:"", step:1 };
+  state={ vehicle:MODELS.find(v=>v.key===key), origin:"", destination:"", passengers:"", name:"", phone:"", luggage:"", step:1 };
   $("vehicleTag").textContent=state.vehicle.name;
   ["originInput","destInput","paxInput","nameInput","phoneInput","lugInput"].forEach(id=>{ if($(id))$(id).value=""; });
   ["originErr","destErr","paxErr","nameErr","phoneErr"].forEach((e,i)=>{ const ids=["originInput","destInput","paxInput","nameInput","phoneInput"]; setFieldError(ids[i],e,null); });
@@ -1020,6 +1116,32 @@ function dayTripWhatsApp(){
   const t="שלום Horian Premium! מעוניין/ת בהצמדת רכב ונהג ליום שלם / טיול קבוצתי.\nתאריך: \nמספר משתתפים: \nנקודת יציאה: \nמסלול / יעדים מבוקשים: \nשעת התחלה משוערת: \nאשמח להצעת מחיר ליום מלא. תודה!";
   window.open(buildLink(t),"_blank");
 }
+/* ---------- drivers recruitment modal ---------- */
+let lastRecruitFocus=null;
+function openRecruit(){
+  ["recName","recPhone","recVehicle"].forEach(id=>$(id).value="");
+  setFieldError("recName","recNameErr",null); setFieldError("recPhone","recPhoneErr",null);
+  lastRecruitFocus=document.activeElement;
+  const ov=$("recruitOverlay"); ov.classList.add("show"); ov.setAttribute("aria-hidden","false");
+  document.body.classList.add("locked");
+  setTimeout(()=>$("recName").focus(),130);
+}
+function closeRecruit(){
+  const ov=$("recruitOverlay"); ov.classList.remove("show"); ov.setAttribute("aria-hidden","true");
+  document.body.classList.remove("locked"); if(lastRecruitFocus)lastRecruitFocus.focus();
+}
+function sendRecruit(){
+  const name=$("recName").value.trim();
+  if(!name){ setFieldError("recName","recNameErr","נא להזין שם"); return; }
+  setFieldError("recName","recNameErr",null);
+  const phone=$("recPhone").value.trim();
+  if(!phone||phone.replace(/\D/g,"").length<9){ setFieldError("recPhone","recPhoneErr","נא להזין מספר טלפון תקין"); return; }
+  setFieldError("recPhone","recPhoneErr",null);
+  const veh=$("recVehicle").value.trim();
+  const text=`היי Horian Premium! מעוניין/ת להצטרף כנהג/ת.\nשם: ${name}\nטלפון: ${phone}\nסוג רכב / ניסיון: ${veh||"—"}`;
+  track("lead_driver_recruit",{});
+  window.open(buildLink(text),"_blank"); closeRecruit();
+}
 
 function track(event,params){
   try{ window.dataLayer=window.dataLayer||[]; window.dataLayer.push({event,...params});
@@ -1067,7 +1189,10 @@ function pickCity(inputId,listId,i){
 
 /* ---------- focus trap for modal ---------- */
 function trapFocus(e){
-  const ov=$("overlay"); if(!ov.classList.contains("show")||e.key!=="Tab")return;
+  if(e.key!=="Tab")return;
+  const ov = $("overlay").classList.contains("show") ? $("overlay")
+           : $("recruitOverlay").classList.contains("show") ? $("recruitOverlay") : null;
+  if(!ov)return;
   const f=[...ov.querySelectorAll('button,[href],input,[tabindex]:not([tabindex="-1"])')]
     .filter(el=>el.offsetParent!==null);
   if(!f.length)return;
@@ -1156,7 +1281,7 @@ function setupBookingFields(){
   const phone=$("phoneInput"); if(phone)phone.addEventListener("input",()=>setFieldError("phoneInput","phoneErr",null));
 }
 /* ---------- init ---------- */
-renderFleet(); renderGallery(); renderAreas(); renderFAQ(); applyConfig();
+renderFleet(); renderAreas(); renderFAQ(); applyConfig();
 setupCombo("originInput","originList"); setupCombo("destInput","destList");
 setupReveals(); setupA11yWidget(); setupBookingFields();
 
@@ -1166,9 +1291,11 @@ requestAnimationFrame(()=>{ const a=$("accentWord"); if(a)a.classList.add("in");
 addEventListener("scroll",()=>$("hdr").classList.toggle("scrolled",scrollY>20),{passive:true});
 addEventListener("keydown",e=>{
   if(e.key==="Escape"&&$("overlay").classList.contains("show"))closeModal();
+  if(e.key==="Escape"&&$("recruitOverlay").classList.contains("show"))closeRecruit();
   trapFocus(e);
 });
 $("overlay").addEventListener("click",e=>{ if(e.target===$("overlay"))closeModal(); });
+$("recruitOverlay").addEventListener("click",e=>{ if(e.target===$("recruitOverlay"))closeRecruit(); });
 </script>
 </body>
 </html>
