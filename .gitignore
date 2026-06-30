@@ -1,19 +1,12 @@
-﻿# Dependencies
+# dependencies (only used locally for image conversion)
 node_modules/
+package.json
+package-lock.json
 
-# Logs
-*.log
-npm-debug.log*
+# original heavy source images (WebP versions in assets/ are what ship)
+Logo.jpg
+*.png
 
-# OS files
-.DS_Store
+# OS
 Thumbs.db
-desktop.ini
-
-# Editor / IDE
-.vscode/
-.idea/
-
-# Environment
-.env
-.env.local
+.DS_Store

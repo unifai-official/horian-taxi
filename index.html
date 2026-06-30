@@ -199,8 +199,8 @@ header.scrolled{background:rgba(11,11,13,.9);border-block-end-color:var(--line);
 @media(max-width:880px){.nav-links{display:none}.nav .btn-gold{padding:10px 18px}}
 
 /* ====================== hero ====================== */
-.hero{position:relative;min-height:100svh;display:flex;align-items:center;
-  padding-block:120px 70px;overflow:hidden}
+.hero{position:relative;min-height:min(760px,92svh);display:flex;align-items:center;
+  padding-block:104px 64px;overflow:hidden}
 .hero::before{content:"";position:absolute;inset-block-start:-22%;inset-inline-end:-12%;
   width:720px;height:720px;border-radius:50%;
   background:radial-gradient(circle,var(--gold-glow),transparent 60%);filter:blur(24px);z-index:0;
@@ -264,8 +264,7 @@ header.scrolled{background:rgba(11,11,13,.9);border-block-end-color:var(--line);
 .car-card:hover{border-color:rgba(217,190,134,.4);transform:translateY(-4px)}
 .car-card:hover::before{transform:scaleX(1)}
 .car-card.vip{border-color:rgba(217,190,134,.3)}
-.car-media{position:relative;aspect-ratio:16/10;
-  background:linear-gradient(160deg,#EEF0F2,#D7DBE0 60%,#C9CDD3);overflow:hidden;
+.car-media{position:relative;aspect-ratio:16/10;background:#fff;overflow:hidden;
   display:flex;align-items:center;justify-content:center}
 .car-media img{width:100%;height:100%;object-fit:cover;object-position:center;
   transition:transform .6s var(--ease)}
@@ -714,3 +713,192 @@ function toggleFaq(btn){
   const item=btn.parentElement, ans=item.querySelector(".faq-a"), open=item.classList.toggle("open");
   btn.setAttribute("aria-expanded",open); ans.style.maxHeight = open ? ans.scrollHeight+"px" : null;
 }
+
+/* ---------- modal + two-step flow ---------- */
+let lastFocus=null;
+function setFieldError(inputId,errId,msg){
+  const inp=$(inputId),err=$(errId);
+  if(msg){ inp.setAttribute("aria-invalid","true"); err.textContent=msg; inp.focus(); }
+  else { inp.setAttribute("aria-invalid","false"); err.textContent=""; }
+}
+function openModal(key){
+  state.vehicle=VEHICLES.find(v=>v.key===key); state.origin=""; state.destination=""; state.step=1;
+  $("vehicleTag").textContent=state.vehicle.name;
+  $("originInput").value=""; $("destInput").value="";
+  setFieldError("originInput","originErr",null); setFieldError("destInput","destErr",null);
+  showStep(1);
+  lastFocus=document.activeElement;
+  const ov=$("overlay"); ov.classList.add("show"); ov.setAttribute("aria-hidden","false");
+  document.body.classList.add("locked");
+  setTimeout(()=>$("originInput").focus(),130);
+}
+function closeModal(){
+  const ov=$("overlay"); ov.classList.remove("show"); ov.setAttribute("aria-hidden","true");
+  document.body.classList.remove("locked"); if(lastFocus)lastFocus.focus();
+}
+function showStep(n){
+  state.step=n; $("step1").style.display=n===1?"block":"none"; $("step2").style.display=n===2?"block":"none";
+  $("dot1").classList.toggle("active",n>=1); $("dot2").classList.toggle("active",n>=2);
+  if(n===2){ updatePreview(); setTimeout(()=>$("destInput").focus(),70); }
+}
+function goStep(n){
+  if(n===2){
+    const v=$("originInput").value.trim();
+    if(!v){ setFieldError("originInput","originErr","נא להזין כתובת מוצא"); return; }
+    setFieldError("originInput","originErr",null); state.origin=v;
+  }
+  showStep(n);
+}
+function updatePreview(){
+  state.destination=$("destInput").value.trim();
+  $("msgPreview").innerHTML=`ההודעה שתישלח:\n<b>שלום, מעוניין/ת להזמין ${esc(state.vehicle.msg)}.</b>\n`+
+    `מוצא: <b>${esc(state.origin||"—")}</b>\nיעד: <b>${esc(state.destination||"—")}</b>\nמתי: עכשיו`;
+}
+function buildLink(text){ return `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(text)}`; }
+function sendWhatsApp(){
+  state.destination=$("destInput").value.trim();
+  if(!state.destination){ setFieldError("destInput","destErr","נא להזין כתובת יעד"); return; }
+  setFieldError("destInput","destErr",null);
+  const text=`שלום, מעוניין/ת להזמין ${state.vehicle.msg}.\nמוצא: ${state.origin}\nיעד: ${state.destination}\nמתי: עכשיו`;
+  track("lead_whatsapp",{vehicle:state.vehicle.key,origin:state.origin,destination:state.destination});
+  window.open(buildLink(text),"_blank"); closeModal();
+}
+function generalWhatsApp(){ track("lead_whatsapp_general",{}); window.open(buildLink("שלום, אשמח לפרטים ולהזמנת מונית."),"_blank"); }
+
+function track(event,params){
+  try{ window.dataLayer=window.dataLayer||[]; window.dataLayer.push({event,...params});
+    if(typeof gtag==="function")gtag("event",event,params);
+    if(typeof fbq==="function")fbq("trackCustom",event,params);
+    console.log("[track]",event,params);
+  }catch(e){console.warn(e);}
+}
+
+/* ---------- autocomplete combobox (index-based, quote-safe) ---------- */
+function setupCombo(inputId,listId){
+  const input=$(inputId),list=$(listId); let hl=-1;
+  const hide=()=>{ list.classList.remove("show"); input.setAttribute("aria-expanded","false"); };
+  const render=q=>{
+    const items=CONFIG.cities.filter(c=>c.includes(q)).slice(0,8);
+    if(!items.length||(items.length===1&&items[0]===q)){ hide(); return; }
+    list._items=items;
+    list.innerHTML=items.map((c,i)=>
+      `<button type="button" role="option" data-i="${i}" onmousedown="event.preventDefault()" onclick="pickCity('${inputId}','${listId}',${i})">${esc(c)}</button>`
+    ).join("");
+    list.classList.add("show"); input.setAttribute("aria-expanded","true"); hl=-1;
+  };
+  input.addEventListener("input",e=>{
+    setFieldError(inputId, inputId==="originInput"?"originErr":"destErr", null);
+    render(e.target.value.trim()); if(inputId==="destInput")updatePreview();
+  });
+  input.addEventListener("focus",e=>{ if(e.target.value.trim())render(e.target.value.trim()); });
+  input.addEventListener("blur",()=>setTimeout(hide,150));
+  input.addEventListener("keydown",e=>{
+    const btns=[...list.querySelectorAll("button")];
+    if(e.key==="ArrowDown"){e.preventDefault();hl=Math.min(hl+1,btns.length-1);}
+    else if(e.key==="ArrowUp"){e.preventDefault();hl=Math.max(hl-1,0);}
+    else if(e.key==="Enter"&&hl>=0&&btns[hl]){e.preventDefault();btns[hl].click();return;}
+    else if(e.key==="Escape"){hide();return;}
+    else return;
+    btns.forEach((b,i)=>b.classList.toggle("hl",i===hl));
+  });
+}
+function pickCity(inputId,listId,i){
+  const list=$(listId); const city=(list._items||[])[i]; if(city==null)return;
+  $(inputId).value=city; list.classList.remove("show"); $(inputId).setAttribute("aria-expanded","false");
+  setFieldError(inputId, inputId==="originInput"?"originErr":"destErr", null);
+  if(inputId==="destInput")updatePreview();
+}
+
+/* ---------- focus trap for modal ---------- */
+function trapFocus(e){
+  const ov=$("overlay"); if(!ov.classList.contains("show")||e.key!=="Tab")return;
+  const f=[...ov.querySelectorAll('button,[href],input,[tabindex]:not([tabindex="-1"])')]
+    .filter(el=>el.offsetParent!==null);
+  if(!f.length)return;
+  const first=f[0], last=f[f.length-1];
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+}
+
+function applyConfig(){
+  $("footPhone").textContent="טלפון: "+CONFIG.displayPhone;
+  $("footPhone").href="tel:"+CONFIG.displayPhone.replace(/\D/g,"");
+  $("footHours").textContent=CONFIG.hoursText; $("yr").textContent=new Date().getFullYear();
+  if(CONFIG.ga4Id){const s=document.createElement("script");s.async=true;
+    s.src="https://www.googletagmanager.com/gtag/js?id="+CONFIG.ga4Id;document.head.appendChild(s);
+    window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};
+    gtag("js",new Date());gtag("config",CONFIG.ga4Id);}
+  if(CONFIG.metaPixelId){!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");
+    fbq("init",CONFIG.metaPixelId);fbq("track","PageView");}
+}
+
+/* ---------- accessibility widget (self-hosted, persisted) ---------- */
+const A11Y_KEY="horian_a11y", A11Y_OPTS=["font","contrast","links","stop"];
+function a11yClass(opt){return "a11y-"+opt;}
+function loadA11y(){
+  let saved=[]; try{saved=JSON.parse(localStorage.getItem(A11Y_KEY))||[];}catch(e){}
+  A11Y_OPTS.forEach(opt=>{
+    const on=saved.includes(opt);
+    document.body.classList.toggle(a11yClass(opt),on);
+    const btn=document.querySelector(`[data-a11y="${opt}"]`); if(btn)btn.setAttribute("aria-pressed",on);
+  });
+  document.documentElement.style.setProperty("--fs-mult", saved.includes("font") ? "1.18" : "1");
+}
+function toggleA11y(opt){
+  const on=!document.body.classList.contains(a11yClass(opt));
+  document.body.classList.toggle(a11yClass(opt),on);
+  const btn=document.querySelector(`[data-a11y="${opt}"]`); if(btn)btn.setAttribute("aria-pressed",on);
+  if(opt==="font")document.documentElement.style.setProperty("--fs-mult", on ? "1.18" : "1");
+  const active=A11Y_OPTS.filter(o=>document.body.classList.contains(a11yClass(o)));
+  try{localStorage.setItem(A11Y_KEY,JSON.stringify(active));}catch(e){}
+}
+function resetA11y(){
+  A11Y_OPTS.forEach(opt=>{ document.body.classList.remove(a11yClass(opt));
+    const btn=document.querySelector(`[data-a11y="${opt}"]`); if(btn)btn.setAttribute("aria-pressed","false"); });
+  document.documentElement.style.setProperty("--fs-mult","1");
+  try{localStorage.removeItem(A11Y_KEY);}catch(e){}
+}
+function setupA11yWidget(){
+  const toggle=$("a11yToggle"), panel=$("a11yPanel");
+  const openPanel=()=>{ panel.classList.add("show"); toggle.setAttribute("aria-expanded","true"); };
+  const closePanel=()=>{ panel.classList.remove("show"); toggle.setAttribute("aria-expanded","false"); };
+  toggle.addEventListener("click",()=>panel.classList.contains("show")?closePanel():openPanel());
+  $("a11yClose").addEventListener("click",()=>{closePanel();toggle.focus();});
+  document.querySelectorAll("[data-a11y]").forEach(btn=>
+    btn.addEventListener("click",()=>toggleA11y(btn.dataset.a11y)));
+  $("a11yReset").addEventListener("click",resetA11y);
+  document.addEventListener("click",e=>{
+    if(panel.classList.contains("show")&&!panel.contains(e.target)&&e.target!==toggle&&!toggle.contains(e.target))closePanel();
+  });
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&panel.classList.contains("show")){closePanel();toggle.focus();} });
+  loadA11y();
+}
+
+/* ---------- reveal on scroll ---------- */
+function setupReveals(){
+  if(!("IntersectionObserver" in window)){document.querySelectorAll(".reveal").forEach(el=>el.classList.add("in"));return;}
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target);} });
+  },{threshold:.12,rootMargin:"0px 0px -8% 0px"});
+  document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+}
+
+/* ---------- init ---------- */
+renderFleet(); renderAreas(); renderFAQ(); applyConfig();
+setupCombo("originInput","originList"); setupCombo("destInput","destList");
+setupReveals(); setupA11yWidget();
+
+// hero underline draw (hero text itself is visible from first paint via CSS — LCP safe)
+requestAnimationFrame(()=>{ const a=$("accentWord"); if(a)a.classList.add("in"); });
+
+addEventListener("scroll",()=>$("hdr").classList.toggle("scrolled",scrollY>20),{passive:true});
+addEventListener("keydown",e=>{
+  if(e.key==="Escape"&&$("overlay").classList.contains("show"))closeModal();
+  trapFocus(e);
+});
+$("overlay").addEventListener("click",e=>{ if(e.target===$("overlay"))closeModal(); });
+</script>
+</body>
+</html>
