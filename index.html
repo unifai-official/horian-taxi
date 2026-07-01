@@ -221,7 +221,7 @@ header.scrolled{background:rgba(11,11,13,.9);border-block-end-color:var(--line);
 .nav-links a:hover{color:var(--ivory)}
 .nav-links a:hover::after{transform:scaleX(1);transform-origin:inline-start}
 .nav .btn{padding:11px 24px;font-size:14px}
-@media(max-width:880px){.nav-links{display:none}.nav .btn-gold{padding:10px 18px}}
+@media(max-width:880px){.nav-links{display:none}}
 
 /* ====================== hero ====================== */
 .hero{position:relative;min-height:min(760px,92svh);display:flex;align-items:center;
@@ -658,6 +658,154 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
   #intro{display:none !important}
   .reveal,.hero [data-hero]{opacity:1 !important;transform:none !important}
   .hero h1 .accent .draw{transform:scaleX(1)}
+}
+
+/* ============================================================= */
+/*  RESPONSIVE — mobile-first tightening (workflow-audited)       */
+/*  Order matters: wider breakpoints first, narrower override.    */
+/* ============================================================= */
+@media(max-width:880px){ :root{ --gutter:20px } }
+@media(max-width:400px){ :root{ --gutter:14px } }
+@media(max-width:880px){ .wrap{ padding-inline:var(--gutter,20px) } }
+
+/* 1 — NAV: kill the 3-col grid so logo + button never collide */
+@media(max-width:880px){
+  .nav-links{ display:none }
+  .nav{ display:flex; justify-content:space-between; align-items:center; gap:12px;
+    height:64px; grid-template-columns:none }
+  .nav .brand,.nav .nav-links,.nav>.btn-gold{ justify-self:auto }
+  .nav .brand{ min-width:0; flex:0 1 auto }
+  .brand img{ width:34px; height:34px }
+  .brand .logo{ font-size:18px; white-space:nowrap }
+  .nav>.btn-gold{ flex:0 0 auto; padding:10px 18px; font-size:13px; white-space:nowrap }
+}
+@media(max-width:400px){
+  .nav{ gap:10px }
+  .brand .logo{ font-size:16px }
+  .nav>.btn-gold{ padding:9px 13px; font-size:12px }
+}
+
+/* 3 — HERO clearance + spacing under the fixed header */
+@media(max-width:880px){
+  .hero{ min-height:auto; padding-block:96px 48px }
+  .hero-grid{ grid-template-columns:1fr; gap:22px }
+  .hero-copy{ max-width:none }
+  .hero .eyebrow{ margin-block-end:14px; letter-spacing:.24em }
+  .hero h1{ font-size:clamp(34px,8.4vw,52px); line-height:1.08; letter-spacing:-.01em }
+  .hero p.sub{ font-size:clamp(15px,4.2vw,18px); margin-block:18px 26px; max-width:none }
+  .hero-cta{ gap:12px }
+}
+/* 4 — HERO car image when stacked */
+@media(max-width:880px){
+  .hero-visual{ order:-1; max-width:min(420px,90vw); margin-inline:auto; margin-block-end:6px }
+  .hero-visual img{ max-width:100% }
+  .hero-visual .plate{ inset-block-end:6%; inset-inline-start:2%; font-size:12px; padding:8px 13px }
+}
+/* 5 — HERO meta as an even 3-up row */
+@media(max-width:880px){
+  .hero-meta{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px;
+    margin-block-start:30px; padding-block-start:24px; border-block-start:1px solid var(--line) }
+  .hero-meta>div{ text-align:center }
+  .hero-meta .num{ font-size:24px }
+  .hero-meta .lbl{ font-size:11.5px; letter-spacing:.02em }
+}
+/* 6 — Section vertical rhythm compression */
+@media(max-width:880px){
+  .fleet,.why,.areas,.test,.faq,.gallery{ padding-block:64px }
+  .daytrip,.recruit{ padding-block:56px }
+  .sec-head{ margin-bottom:36px }
+  .airport{ margin-block-start:56px }
+}
+/* 7 — Service-area chips */
+@media(max-width:560px){
+  .area-chips{ gap:8px; margin-block-start:26px }
+  .area-chips span{ padding:7px 14px; font-size:13px }
+}
+/* 8 — Day-trip banner */
+@media(max-width:560px){
+  .daytrip-inner{ padding:28px 22px }
+  .daytrip h2{ font-size:clamp(24px,6.5vw,30px) }
+  .daytrip p{ font-size:15px; margin-block:14px 22px }
+  .daytrip .btn{ width:100% }
+}
+/* 9 — Recruit banner */
+@media(max-width:560px){
+  .recruit-inner{ padding:28px 22px; gap:22px }
+  .recruit h2{ font-size:clamp(22px,6vw,28px) }
+  .recruit p{ font-size:15px }
+  .recruit-points{ gap:10px 18px; margin-block-start:16px }
+}
+/* 10 — Section heads + finer padding on small phones */
+@media(max-width:480px){
+  .fleet,.why,.areas,.test,.faq,.gallery{ padding-block:52px }
+  .sec-head h2{ font-size:clamp(26px,7vw,32px) }
+  .sec-head p{ font-size:15px }
+}
+/* overflow guards for narrow phones */
+@media(max-width:480px){
+  .hero-copy,.hero h1,.hero p.sub,.hero .eyebrow{ max-width:100%; overflow-wrap:break-word }
+  .eyebrow{ white-space:normal }
+}
+/* 11 — HERO fine-tuning + stacked full-width CTAs */
+@media(max-width:480px){
+  .hero{ padding-block:92px 44px }
+  .hero h1{ font-size:clamp(30px,8.6vw,40px); overflow-wrap:break-word }
+  .hero h1 .accent{ white-space:normal }
+  .hero h1 .accent .draw{ inset-block-end:2px; height:2px }
+  .hero p.sub{ font-size:15px; margin-block:16px 22px }
+  .hero .eyebrow{ font-size:11px; letter-spacing:.2em }
+  .hero-cta{ flex-direction:column; align-items:stretch; gap:12px }
+  .hero-cta .btn{ width:100%; padding-inline:24px }
+  .hero-visual{ max-width:min(360px,86vw) }
+  .hero-visual .halo{ inset:8% 0 }
+  .hero-meta{ gap:10px }
+  .hero-meta .num{ font-size:22px }
+}
+/* 12 — Fleet cards: body + stacked action buttons */
+@media(max-width:480px){
+  .car-body{ padding:20px 18px 20px }
+  .car-body h3{ font-size:20px }
+  .car-actions{ flex-wrap:wrap; gap:8px }
+  .car-actions .btn-detail{ flex:1 1 100%; padding:12px 18px }
+  .car-actions .btn-book{ flex:1 1 100% }
+}
+/* 13 — FAQ */
+@media(max-width:480px){
+  .faq-q{ font-size:16px; padding:18px 0; gap:12px }
+  .faq-q .plus{ font-size:22px }
+  .faq-a{ font-size:15px }
+  .faq-a div{ padding-block-end:18px }
+}
+/* 14 — Booking modal as bottom-sheet (16px inputs avoid iOS zoom) */
+@media(max-width:480px){
+  .overlay{ padding:12px; align-items:flex-end }
+  .modal{ padding:26px 20px 24px; max-width:100%; border-radius:22px 22px 0 0 }
+  .modal h3{ font-size:22px }
+  .modal-actions{ flex-wrap:wrap; gap:10px }
+  .modal-actions .btn{ flex:1 1 100% }
+  .modal-actions .btn-back{ flex:1 1 100%; order:2 }
+  .combo input,.fld{ font-size:16px; padding:14px 14px }
+}
+/* 15 — Detail modal gallery */
+@media(max-width:480px){
+  .detail-body{ padding:20px 18px 22px }
+  .detail-body h3{ font-size:21px }
+  .gal-nav{ width:36px; height:36px; font-size:22px }
+  .gal-prev{ inset-inline-start:8px }
+  .gal-next{ inset-inline-end:8px }
+  .modal-detail .modal-actions{ flex-wrap:wrap; gap:10px }
+  .modal-detail .modal-actions .btn{ flex:1 1 100% }
+}
+/* 16 — Footer + a11y panel width safety */
+@media(max-width:600px){
+  .foot-grid{ gap:28px }
+  .foot-brand{ flex:1 1 100% }
+  .foot-col{ flex:1 1 40% }
+}
+@media(max-width:480px){
+  footer{ padding-block:48px 92px }
+  .foot-brand p{ max-width:none }
+  .a11y-panel{ inset-block-end:80px; inset-inline-start:16px; width:min(268px,calc(100vw - 32px)) }
 }
 </style>
 </head>
