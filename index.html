@@ -611,7 +611,7 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
            srcset="assets/car-hero-768.webp 768w, assets/car-hero-1024.webp 1024w, assets/car-hero-1536.webp 1536w"
            sizes="(max-width:880px) 92vw, 560px"
            width="1024" height="683" fetchpriority="high" decoding="async"
-           alt="מונית יוקרה שחורה של Horian Premium Taxi" />
+           alt="מונית יוקרה מרצדס EQE לבנה של Horian Premium Taxi" />
       <div class="plate" aria-hidden="true"><b>VIP</b> · נסיעה בסטייל</div>
     </div>
   </div>
@@ -639,15 +639,6 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
       <h2>בחרו את הרכב שמתאים לכם</h2>
       <p>שלוש קטגוריות — מוניות 4–6 נוסעים, מיני-וואן וואנים 6–10, ורכבי הסעות 12–23. לכל נסיעה יש את הרכב הנכון.</p></div>
 
-    <!-- main featured taxi image -->
-    <div class="fleet-hero reveal">
-      <img src="assets/real-mercedes-1-1000.webp"
-           srcset="assets/real-mercedes-1-600.webp 600w, assets/real-mercedes-1-1000.webp 1000w"
-           sizes="(max-width:1100px) 94vw, 1040px"
-           width="1000" height="750" loading="lazy" decoding="async"
-           alt="מונית יוקרה מרצדס EQE לבנה של Horian Premium" />
-      <div class="fleet-hero-cap"><span>הצי שלנו במציאות</span><b>מוניות, וואנים ורכבי הסעות — מצולמים בשטח</b></div>
-    </div>
 
     <!-- tabs -->
     <div class="fleet-tabs reveal" id="fleetTabs" role="tablist" aria-label="קטגוריות רכב"></div>
@@ -801,7 +792,7 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
   <div class="modal" id="modal">
     <button class="modal-close" onclick="closeModal()" aria-label="סגירת חלון ההזמנה">×</button>
     <span class="vehicle-tag" id="vehicleTag">מונית</span>
-    <div class="steps-dots" aria-hidden="true"><i id="dot1" class="active"></i><i id="dot2"></i><i id="dot3"></i><i id="dot4"></i></div>
+    <div class="steps-dots" aria-hidden="true"><i id="dot1" class="active"></i><i id="dot2"></i><i id="dot3"></i></div>
 
     <!-- step 1: pickup -->
     <div id="step1" class="mstep">
@@ -832,34 +823,8 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
       </div>
     </div>
 
-    <!-- step 3: passengers + name + phone -->
+    <!-- step 3: luggage + preview + send -->
     <div id="step3" class="mstep" style="display:none">
-      <h3>פרטי הנסיעה</h3>
-      <p class="step-sub">כמה נוסעים, ואיך ליצור קשר</p>
-      <label class="fld-label" for="paxInput">מספר נוסעים</label>
-      <div class="pax-row" id="paxRow" role="group" aria-label="מספר נוסעים">
-        <button type="button" class="pax-chip" data-pax="1-4">1–4</button>
-        <button type="button" class="pax-chip" data-pax="5-6">5–6</button>
-        <button type="button" class="pax-chip" data-pax="7-10">7–10</button>
-        <button type="button" class="pax-chip" data-pax="11-16">11–16</button>
-        <button type="button" class="pax-chip" data-pax="17-23">17–23</button>
-      </div>
-      <input id="paxInput" type="text" inputmode="numeric" autocomplete="off" class="fld" placeholder="או הקלידו מספר מדויק" aria-label="מספר נוסעים מדויק" aria-describedby="paxErr" />
-      <div id="paxErr" class="field-err" role="alert" aria-live="assertive"></div>
-      <label class="fld-label" for="nameInput">שם מלא</label>
-      <input id="nameInput" type="text" autocomplete="name" class="fld" placeholder="השם שלכם" aria-describedby="nameErr" />
-      <div id="nameErr" class="field-err" role="alert" aria-live="assertive"></div>
-      <label class="fld-label" for="phoneInput">טלפון</label>
-      <input id="phoneInput" type="tel" autocomplete="tel" inputmode="tel" class="fld" placeholder="050-0000000" aria-describedby="phoneErr" />
-      <div id="phoneErr" class="field-err" role="alert" aria-live="assertive"></div>
-      <div class="modal-actions">
-        <button class="btn btn-ghost btn-back" onclick="goStep(2)">→ חזרה</button>
-        <button class="btn btn-gold" onclick="goStep(4)">המשך →</button>
-      </div>
-    </div>
-
-    <!-- step 4: luggage + preview + send -->
-    <div id="step4" class="mstep" style="display:none">
       <h3>מטען</h3>
       <p class="step-sub">יש לכם מזוודות או ציוד? (לא חובה)</p>
       <div class="lug-toggle" role="group" aria-label="האם יש מטען">
@@ -872,7 +837,7 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
       </div>
       <div class="msg-preview" id="msgPreview"></div>
       <div class="modal-actions">
-        <button class="btn btn-ghost btn-back" onclick="goStep(3)">→ חזרה</button>
+        <button class="btn btn-ghost btn-back" onclick="goStep(2)">→ חזרה</button>
         <button class="btn btn-wa" onclick="sendWhatsApp()">
           <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.413c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24z"/></svg>
           שלח בוואטסאפ
@@ -1035,11 +1000,11 @@ function setFieldError(inputId,errId,msg){
   else { if(inp)inp.setAttribute("aria-invalid","false"); err.textContent=""; }
 }
 function openModal(key){
-  state={ vehicle:MODELS.find(v=>v.key===key), origin:"", destination:"", passengers:"", name:"", phone:"", luggage:"", step:1 };
+  state={ vehicle:MODELS.find(v=>v.key===key), origin:"", destination:"", luggage:"", step:1 };
   $("vehicleTag").textContent=state.vehicle.name;
-  ["originInput","destInput","paxInput","nameInput","phoneInput","lugInput"].forEach(id=>{ if($(id))$(id).value=""; });
-  ["originErr","destErr","paxErr","nameErr","phoneErr"].forEach((e,i)=>{ const ids=["originInput","destInput","paxInput","nameInput","phoneInput"]; setFieldError(ids[i],e,null); });
-  document.querySelectorAll(".pax-chip,.lug-opt").forEach(b=>b.classList.remove("on"));
+  ["originInput","destInput","lugInput"].forEach(id=>{ if($(id))$(id).value=""; });
+  setFieldError("originInput","originErr",null); setFieldError("destInput","destErr",null);
+  document.querySelectorAll(".lug-opt").forEach(b=>b.classList.remove("on"));
   $("lugDetail").style.display="none";
   showStep(1);
   lastFocus=document.activeElement;
@@ -1053,32 +1018,15 @@ function closeModal(){
 }
 function showStep(n){
   state.step=n;
-  for(let i=1;i<=4;i++){ $("step"+i).style.display=i===n?"block":"none"; $("dot"+i).classList.toggle("active",n>=i); }
-  if(n===4){ updatePreview(); }
-  const focusMap={1:"originInput",2:"destInput",3:"paxInput"};
+  for(let i=1;i<=3;i++){ $("step"+i).style.display=i===n?"block":"none"; $("dot"+i).classList.toggle("active",n>=i); }
+  if(n===3){ updatePreview(); }
+  const focusMap={1:"originInput",2:"destInput"};
   if(focusMap[n])setTimeout(()=>$(focusMap[n]).focus(),70);
 }
 function goStep(n){
-  // validate forward transitions
   if(n>=2){ const v=$("originInput").value.trim(); if(!v){ showStep(1); setFieldError("originInput","originErr","נא להזין כתובת מוצא"); return; } state.origin=v; }
   if(n>=3){ const v=$("destInput").value.trim(); if(!v){ showStep(2); setFieldError("destInput","destErr","נא להזין יעד"); return; } state.destination=v; }
-  if(n>=4){
-    const pax=$("paxInput").value.trim()||state.passengers;
-    if(!pax){ showStep(3); setFieldError("paxInput","paxErr","נא לבחור או להקליד מספר נוסעים"); return; }
-    state.passengers=pax;
-    const name=$("nameInput").value.trim();
-    if(!name){ showStep(3); setFieldError("nameInput","nameErr","נא להזין שם"); return; }
-    state.name=name;
-    const phone=$("phoneInput").value.trim();
-    if(!phone||phone.replace(/\D/g,"").length<9){ showStep(3); setFieldError("phoneInput","phoneErr","נא להזין מספר טלפון תקין"); return; }
-    state.phone=phone;
-  }
   showStep(n);
-}
-function pickPax(val,btn){
-  state.passengers=val; $("paxInput").value=val;
-  document.querySelectorAll(".pax-chip").forEach(b=>b.classList.toggle("on",b===btn));
-  setFieldError("paxInput","paxErr",null);
 }
 function setLuggage(val){
   document.querySelectorAll(".lug-opt").forEach(b=>b.classList.toggle("on",b.dataset.lug===val));
@@ -1088,26 +1036,22 @@ function setLuggage(val){
   if(val==="yes")setTimeout(()=>$("lugInput").focus(),60);
 }
 function buildMessage(){
-  const lug = state.luggage || ($("lugInput") && $("lugInput").value.trim()) || "";
-  return `תודה שיצרת קשר עם Horian Premium!\nלביצוע הזמנה ריכזנו את הפרטים:\n\n`+
-    `שם לקוח: ${state.name}\nטלפון: ${state.phone}\n`+
-    `כתובת איסוף: ${state.origin}\nיעד: ${state.destination}\n`+
-    `מספר נוסעים: ${state.passengers}\nרכב מבוקש: ${state.vehicle.msg}\n`+
-    `מטען: ${lug||"—"}\n\n`+
-    `— להשלמה (מחקו את מה שלא רלוונטי) —\nמזוודות XL: \nמזוודות ג': \nטרולי: \nקרטונים: \nמשלוח: \nשונות: \n\n`+
-    `הצעת מחיר תישלח בהתאם לנתונים. תודה!`;
+  const lug = state.luggage || "";
+  return `שלום, מעוניין/ת ב${state.vehicle.msg}.\n`+
+    `מוצא: ${state.origin}\nיעד: ${state.destination}\n`+
+    `מטען: ${lug||"ללא מטען מיוחד"}\nמתי: עכשיו`;
 }
 function updatePreview(){
   if($("lugInput") && $("lugInput").offsetParent!==null){ const t=$("lugInput").value.trim(); if(t)state.luggage=t; }
   const m=$("msgPreview");
-  m.innerHTML = `ההודעה שתישלח:\n`+esc(buildMessage()).replace(/(שם לקוח:|טלפון:|כתובת איסוף:|יעד:|מספר נוסעים:|רכב מבוקש:|מטען:)/g,"<b>$1</b>");
+  m.innerHTML = `ההודעה שתישלח:\n`+esc(buildMessage()).replace(/(מוצא:|יעד:|מטען:|מתי:)/g,"<b>$1</b>");
 }
 function buildLink(text){ return `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(text)}`; }
 function sendWhatsApp(){
   if($("lugInput") && $("lugInput").offsetParent!==null){ const t=$("lugInput").value.trim(); if(t)state.luggage=t; }
   if(!state.luggage)state.luggage="ללא מטען מיוחד";
   const text=buildMessage();
-  track("lead_whatsapp",{vehicle:state.vehicle.key,origin:state.origin,destination:state.destination,passengers:state.passengers});
+  track("lead_whatsapp",{vehicle:state.vehicle.key,origin:state.origin,destination:state.destination});
   window.open(buildLink(text),"_blank"); closeModal();
 }
 function generalWhatsApp(){ track("lead_whatsapp_general",{}); window.open(buildLink("שלום, אשמח לפרטים ולהזמנת מונית."),"_blank"); }
@@ -1268,17 +1212,8 @@ function setupReveals(){
 
 /* ---------- booking form field wiring ---------- */
 function setupBookingFields(){
-  document.querySelectorAll(".pax-chip").forEach(btn=>
-    btn.addEventListener("click",()=>pickPax(btn.dataset.pax,btn)));
-  const pax=$("paxInput");
-  if(pax)pax.addEventListener("input",()=>{
-    document.querySelectorAll(".pax-chip").forEach(b=>b.classList.remove("on"));
-    state.passengers=pax.value.trim(); setFieldError("paxInput","paxErr",null);
-  });
   const lug=$("lugInput");
   if(lug)lug.addEventListener("input",()=>{ state.luggage=lug.value.trim()||"יש מטען"; updatePreview(); });
-  const name=$("nameInput"); if(name)name.addEventListener("input",()=>setFieldError("nameInput","nameErr",null));
-  const phone=$("phoneInput"); if(phone)phone.addEventListener("input",()=>setFieldError("phoneInput","phoneErr",null));
 }
 /* ---------- init ---------- */
 renderFleet(); renderAreas(); renderFAQ(); applyConfig();
