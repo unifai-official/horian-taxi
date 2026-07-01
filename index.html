@@ -34,8 +34,8 @@
 <meta name="twitter:image" content="https://horiantaxi.co.il/assets/og-image.jpg" />
 
 <!-- preload: hero LCP image + primary fonts -->
-<link rel="preload" as="image" href="assets/car-hero-1024.webp" fetchpriority="high"
-      imagesrcset="assets/car-hero-768.webp 768w, assets/car-hero-1024.webp 1024w, assets/car-hero-1536.webp 1536w"
+<link rel="preload" as="image" href="assets/car-hero-1024.webp?v=2" fetchpriority="high"
+      imagesrcset="assets/car-hero-768.webp?v=2 768w, assets/car-hero-1024.webp?v=2 1024w, assets/car-hero-1536.webp?v=2 1536w"
       imagesizes="(max-width:760px) 92vw, 560px" />
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/frankruhl-900.woff2" crossorigin />
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/heebo-400.woff2" crossorigin />
@@ -199,12 +199,15 @@ header.scrolled{background:rgba(11,11,13,.9);border-block-end-color:var(--line);
 .scroll-prog{position:absolute;inset-block-end:0;inset-inline-start:0;width:100%;height:2px;z-index:2;
   background:linear-gradient(90deg,var(--gold),var(--gold-deep));
   transform:scaleX(0);transform-origin:inline-start;will-change:transform}
-.nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:16px}
+.nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:72px;gap:16px}
+.nav .brand{justify-self:start}
+.nav .nav-links{justify-self:center}
+.nav>.btn-gold{justify-self:end}
 .brand{display:flex;align-items:center;gap:11px}
 .brand img{width:38px;height:38px;border-radius:9px}
 .brand .logo{font-family:var(--serif);font-weight:700;font-size:21px;letter-spacing:.01em;direction:ltr;line-height:1}
 .brand .logo b{color:var(--gold);font-weight:900}
-.nav-links{display:flex;gap:34px;font-size:15px;color:var(--muted)}
+.nav-links{display:flex;gap:24px;font-size:13.5px;color:var(--muted)}
 .nav-links a{position:relative;transition:color .3s}
 .nav-links a::after{content:"";position:absolute;inset-block-end:-6px;inset-inline:0;height:1px;
   background:var(--gold);transform:scaleX(0);transform-origin:inline-end;transition:transform .35s var(--ease)}
@@ -655,7 +658,7 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
   <i class="scroll-prog" id="scrollProg" aria-hidden="true"></i>
   <div class="wrap nav">
     <a href="#" class="brand" aria-label="Horian Premium Taxi — דף הבית">
-      <img src="assets/logo-96.webp" width="38" height="38" alt="לוגו Horian Premium Taxi" />
+      <img src="assets/logo-96.webp?v=2" width="38" height="38" alt="לוגו Horian Premium Taxi" />
       <span class="logo">Horian <b>Premium</b></span>
     </a>
     <nav class="nav-links" aria-label="ניווט ראשי">
@@ -691,8 +694,8 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
     </div>
     <div class="hero-visual">
       <span class="halo" aria-hidden="true"></span>
-      <img src="assets/car-hero-1024.webp"
-           srcset="assets/car-hero-768.webp 768w, assets/car-hero-1024.webp 1024w, assets/car-hero-1536.webp 1536w"
+      <img src="assets/car-hero-1024.webp?v=2"
+           srcset="assets/car-hero-768.webp?v=2 768w, assets/car-hero-1024.webp?v=2 1024w, assets/car-hero-1536.webp?v=2 1536w"
            sizes="(max-width:880px) 92vw, 560px"
            width="1024" height="683" fetchpriority="high" decoding="async"
            alt="מונית יוקרה מרצדס EQE לבנה של Horian Premium Taxi" />
@@ -816,7 +819,7 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
     <div class="foot-grid">
       <div class="foot-brand">
         <a href="#" class="brand" aria-label="Horian Premium Taxi">
-          <img src="assets/logo-96.webp" width="40" height="40" alt="" />
+          <img src="assets/logo-96.webp?v=2" width="40" height="40" alt="" />
           <span class="logo serif" style="font-size:24px">Horian <b style="color:var(--gold)">Premium</b></span>
         </a>
         <p>שירות מוניות יוקרתי 24/7. הזמינו בקלות בוואטסאפ ותיהנו מנסיעה נעימה ובטוחה.</p>
