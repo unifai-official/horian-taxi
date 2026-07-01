@@ -154,9 +154,16 @@ img{max-width:100%;height:auto;display:block}
 .skip-link:focus{inset-block-start:0}
 
 /* ====================== reveal system ====================== */
-.reveal{opacity:0;transform:translateY(26px);
-  transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:var(--d,0s)}
-.reveal.in{opacity:1;transform:none}
+.reveal{opacity:0;transform:translateY(30px);filter:blur(6px);
+  transition:opacity 1s var(--ease),transform 1s var(--ease),filter 1s var(--ease);transition-delay:var(--d,0s)}
+.reveal.in{opacity:1;transform:none;filter:blur(0)}
+@media(prefers-reduced-motion:reduce){.reveal{filter:none!important}}
+body.a11y-stop .reveal{filter:none!important}
+/* soft gradient section dividers (replace hard lines) */
+section[class]{position:relative}
+.sec-fade{border-block-start:none!important}
+.sec-fade::before{content:"";position:absolute;inset-block-start:0;inset-inline:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-deep),transparent);opacity:.4}
 
 /* ====================== buttons ====================== */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;
@@ -409,7 +416,7 @@ body.a11y-stop .fleet-grid .car-card{animation:none}
   width:6px;height:6px;border-radius:50%;background:var(--gold)}
 
 /* ====================== real fleet gallery ====================== */
-.gallery{padding-block:100px;border-block-start:1px solid var(--line)}
+.gallery{padding-block:100px}
 .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-block-start:52px}
 @media(max-width:1000px){.gallery-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.gallery-grid{grid-template-columns:1fr}}
@@ -425,7 +432,7 @@ body.a11y-stop .fleet-grid .car-card{animation:none}
 .gcard-head span{font-size:12px;color:var(--gold);letter-spacing:.03em}
 .gcard figcaption p{font-size:14px;color:var(--muted);line-height:1.6}
 /* ====================== day-trip banner ====================== */
-.daytrip{padding-block:90px;border-block-start:1px solid var(--line)}
+.daytrip{padding-block:90px}
 .daytrip-inner{position:relative;max-width:var(--maxw);margin-inline:auto;border-radius:22px;overflow:hidden;
   border:1px solid rgba(217,190,134,.32);
   background:linear-gradient(120deg,#15130E,#1B1B20 55%,#101013);padding:clamp(34px,5vw,60px)}
@@ -438,7 +445,7 @@ body.a11y-stop .fleet-grid .car-card{animation:none}
 .daytrip p{color:var(--muted);font-size:17px;margin-block:16px 28px;max-width:620px;line-height:1.7}
 .daytrip .btn{font-size:16px}
 /* ====================== drivers recruitment ====================== */
-.recruit{padding-block:90px;border-block-start:1px solid var(--line)}
+.recruit{padding-block:90px}
 .recruit-inner{position:relative;max-width:var(--maxw);margin-inline:auto;border-radius:22px;overflow:hidden;
   border:1px solid rgba(201,205,211,.28);
   background:linear-gradient(120deg,#101216,#16181d 55%,#0f1013);
@@ -457,7 +464,11 @@ body.a11y-stop .fleet-grid .car-card{animation:none}
 .recruit .btn{flex-shrink:0;font-size:16px}
 @media(max-width:760px){.recruit-inner{flex-direction:column;align-items:flex-start}.recruit .btn{width:100%}}
 /* ====================== why ====================== */
-.why{padding-block:100px;border-block-start:1px solid var(--line)}
+.why,.areas,.test,.faq,.gallery,.daytrip,.recruit{position:relative}
+.why::before,.areas::before,.test::before,.faq::before,.gallery::before,.daytrip::before,.recruit::before{
+  content:"";position:absolute;inset-block-start:0;inset-inline:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-deep),transparent);opacity:.35}
+.why{padding-block:100px}
 .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-block-start:52px}
 @media(max-width:860px){.why-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:480px){.why-grid{grid-template-columns:1fr}}
@@ -467,7 +478,7 @@ body.a11y-stop .fleet-grid .car-card{animation:none}
 .why-item p{font-size:14px;color:var(--muted)}
 
 /* ====================== areas ====================== */
-.areas{padding-block:100px;text-align:center;border-block-start:1px solid var(--line)}
+.areas{padding-block:100px;text-align:center}
 .areas h2{font-family:var(--serif);font-size:clamp(28px,4vw,40px);font-weight:700}
 .area-chips{display:flex;flex-wrap:wrap;gap:11px;justify-content:center;margin-block-start:38px}
 .area-chips span{border:1px solid var(--line);border-radius:100px;padding:9px 20px;font-size:15px;
@@ -475,17 +486,28 @@ body.a11y-stop .fleet-grid .car-card{animation:none}
 .area-chips span:hover{border-color:var(--silver);color:var(--silver)}
 
 /* ====================== testimonials ====================== */
-.test{padding-block:100px;border-block-start:1px solid var(--line)}
-.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-block-start:52px}
-@media(max-width:860px){.test-grid{grid-template-columns:1fr}}
-.test-card{padding:30px 26px;border:1px solid var(--line);border-radius:var(--radius);transition:border-color .4s}
-.test-card:hover{border-color:rgba(217,190,134,.35)}
-.stars{color:var(--gold);font-size:15px;letter-spacing:3px;margin-block-end:14px}
-.test-card p{font-size:16px;color:var(--ivory);margin-block-end:16px;font-weight:300;line-height:1.7}
-.test-card .who{font-size:14px;color:var(--muted)}
-
+.test{padding-block:100px}
+.test-slider{position:relative;max-width:800px;margin:52px auto 0;padding-inline:52px}
+.test-viewport{overflow:hidden;border-radius:var(--radius)}
+.test-track{display:flex;transition:transform .55s var(--ease)}
+.test-card{flex:0 0 100%;box-sizing:border-box;padding:40px 40px 34px;text-align:center;margin:0}
+.stars{color:var(--gold);font-size:16px;letter-spacing:3px;margin-block-end:18px}
+.test-card blockquote{font-family:var(--serif);font-size:clamp(18px,2.4vw,24px);color:var(--ivory);
+  font-weight:400;line-height:1.55;margin:0 0 22px;font-style:italic}
+.test-card figcaption b{display:block;font-size:15px;color:var(--ivory);font-weight:500}
+.test-card figcaption span{display:block;font-size:13px;color:var(--gold);margin-block-start:5px;letter-spacing:.03em}
+.test-arrow{position:absolute;inset-block-start:calc(50% - 20px);z-index:2;width:42px;height:42px;border-radius:50%;
+  border:1px solid var(--line);background:var(--bg-elev);color:var(--ivory);font-size:26px;line-height:1;cursor:pointer;
+  display:grid;place-items:center;transition:border-color .25s,color .25s,background .25s}
+.test-arrow:hover{border-color:var(--gold);color:var(--gold);background:var(--bg-elev-2)}
+.test-prev{inset-inline-start:0}
+.test-next{inset-inline-end:0}
+.test-dots{display:flex;gap:8px;justify-content:center;margin-block-start:26px}
+.test-dots button{width:8px;height:8px;padding:0;border:none;border-radius:50%;background:var(--line);cursor:pointer;transition:background .3s,transform .3s}
+.test-dots button.on{background:var(--gold);transform:scale(1.25)}
+@media(max-width:560px){.test-slider{padding-inline:0}.test-arrow{display:none}.test-card{padding:30px 20px}}
 /* ====================== faq ====================== */
-.faq{padding-block:100px;border-block-start:1px solid var(--line)}
+.faq{padding-block:100px}
 .faq-list{max-width:760px;margin:48px auto 0}
 .faq-item{border-block-end:1px solid var(--line)}
 .faq-q{width:100%;background:none;border:none;color:var(--ivory);cursor:pointer;font-family:var(--sans);
@@ -763,13 +785,15 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
 </section>
 
 <!-- ===================== testimonials ===================== -->
-<section class="test">
+<!-- ===================== testimonials slider ===================== -->
+<section class="test" aria-label="המלצות לקוחות">
   <div class="wrap">
     <div class="sec-head reveal"><span class="eyebrow">לקוחות מספרים</span><h2>הם כבר נסעו איתנו</h2></div>
-    <div class="test-grid">
-      <div class="test-card reveal" style="--d:0s"><div class="stars" aria-hidden="true">★★★★★</div><p>"הזמנתי מונית ל-6 נוסעים לשדה התעופה ב-5 בבוקר. הגיעו בזמן, רכב נקי ונהג נעים. שירות מושלם."</p><div class="who">— דנה כ.</div></div>
-      <div class="test-card reveal" style="--d:.12s"><div class="stars" aria-hidden="true">★★★★★</div><p>"השירות הכי אמין שיש. תמיד עונים, תמיד מגיעים מהר. הפכו להיות המוניות הקבועות של המשפחה."</p><div class="who">— אורי מ.</div></div>
-      <div class="test-card reveal" style="--d:.24s"><div class="stars" aria-hidden="true">★★★★★</div><p>"רכב VIP להסעת אורחים עסקיים — נראה מצוין והרגיש פרימיום אמיתי. ממליצה בחום."</p><div class="who">— נטלי ב.</div></div>
+    <div class="test-slider reveal" id="testSlider">
+      <button class="test-arrow test-prev" id="testPrev" aria-label="המלצה קודמת">‹</button>
+      <div class="test-viewport"><div class="test-track" id="testTrack"></div></div>
+      <button class="test-arrow test-next" id="testNext" aria-label="המלצה הבאה">›</button>
+      <div class="test-dots" id="testDots" role="tablist" aria-label="בחירת המלצה"></div>
     </div>
   </div>
 </section>
@@ -1070,6 +1094,22 @@ const MODELS = [
     desc:"הרכבים הגדולים — 19, 20 ו-23 נוסעים (ספרינטר / קרפטר / טרנזיט / סוואנה / איווקו).",
     features:["19 / 20 / 23 נוסעים","קיבולת מקסימלית","תא מטען גדול","מיזוג","מתאים לקבוצות גדולות","הבדלי מחיר בין דגמים"] },
 ];
+/* המלצות לקוחות (סליידר). ניתן לערוך/להוסיף. */
+const TESTIMONIALS = [
+  ["הזמנתי מונית ל-6 נוסעים לשדה התעופה ב-5 בבוקר. הגיעו בזמן, רכב נקי ונהג נעים. שירות מושלם.","דנה כ.","נסיעה לנתב\"ג"],
+  ["השירות הכי אמין שיש. תמיד עונים, תמיד מגיעים מהר. הפכו להיות המוניות הקבועות של המשפחה.","אורי מ.","לקוח קבוע"],
+  ["רכב VIP להסעת אורחים עסקיים — נראה מצוין והרגיש פרימיום אמיתי. ממליצה בחום.","נטלי ב.","הסעת VIP"],
+  ["הזמנו מיניבוס לטיול משפחתי ליום שלם. הנהג היה סבלני, גמיש במסלול ומקצועי. חוויה מעולה.","יוסי ר.","יום טיול משפחתי"],
+  ["צריכה הייתה מונית נגישה לאמא שלי עם כיסא גלגלים. הרכב היה מאובזר, הנהג עזר בכל שלב. תודה!","מירב ל.","מונית נגישה"],
+  ["חזרנו מחו\"ל בשעה 2 בלילה והם חיכו לנו בדיוק בזמן למרות עיכוב בטיסה. אמינות ברמה אחרת.","אלכס פ.","איסוף מנתב\"ג"],
+  ["הזמנתי ואן ל-8 אנשים לחתונה. רכב מפואר, נהג בחליפה, הכל מושלם. בדיוק מה שרצינו.","שירה ד.","הסעה לאירוע"],
+  ["מחיר הוגן וברור מראש בלי הפתעות. שלחתי הודעה בוואטסאפ וקיבלתי הצעה תוך דקות.","רון א.","הזמנה בוואטסאפ"],
+  ["ספרינטר ל-19 אנשים לטיול חברה. נוח, ממוזג ומרווח. הנהג הכיר את כל הדרכים. ממליץ בגדול.","תמר ג.","הסעת קבוצה"],
+  ["נסיעה יומית קבועה לעבודה. תמיד מגיעים בזמן, תמיד באדיבות. שקט נפשי אמיתי.","עידן ש.","נסיעות יומיות"],
+  ["הזמנתי לרגע האחרון מונית לבית חולים. הגיעו תוך 4 דקות. הצילו לי את היום ממש.","חנה מ.","נסיעה דחופה"],
+  ["טיול מאורגן לגליל עם ואן ונהג צמוד ליום שלם. תכנון מסלול מעולה והמון סבלנות. כיף אמיתי.","דוד כ.","יום שלם בצפון"],
+  ["שירות 24/7 שבאמת עובד. התקשרתי ב-3 לפנות בוקר וקיבלתי מענה מיידי. מקצוענים.","לינוי ב.","זמינות 24/7"],
+];
 let state = { vehicle:null, origin:"", destination:"", passengers:"", name:"", phone:"", luggage:"", step:1 };
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
@@ -1142,6 +1182,44 @@ function renderFAQ(){
 function toggleFaq(btn){
   const item=btn.parentElement, ans=item.querySelector(".faq-a"), open=item.classList.toggle("open");
   btn.setAttribute("aria-expanded",open); ans.style.maxHeight = open ? ans.scrollHeight+"px" : null;
+}
+/* ---------- testimonials slider ---------- */
+let testIdx=0, testTimer=null;
+function renderTestimonials(){
+  $("testTrack").innerHTML = TESTIMONIALS.map(([txt,who,ctx])=>`
+    <figure class="test-card">
+      <div class="stars" aria-hidden="true">★★★★★</div>
+      <blockquote>${esc(txt)}</blockquote>
+      <figcaption><b>— ${esc(who)}</b>${ctx?`<span>${esc(ctx)}</span>`:""}</figcaption>
+    </figure>`).join("");
+  $("testDots").innerHTML = TESTIMONIALS.map((_,i)=>
+    `<button role="tab" aria-label="המלצה ${i+1}" class="${i===0?"on":""}" onclick="goTest(${i})"></button>`).join("");
+}
+function updateTest(){
+  $("testTrack").style.transform=`translateX(${testIdx*100}%)`;
+  document.querySelectorAll("#testDots button").forEach((d,i)=>d.classList.toggle("on",i===testIdx));
+}
+function goTest(i){ testIdx=(i+TESTIMONIALS.length)%TESTIMONIALS.length; updateTest(); restartTest(); }
+function nextTest(){ goTest(testIdx+1); }
+function prevTest(){ goTest(testIdx-1); }
+function restartTest(){
+  if(testTimer)clearInterval(testTimer);
+  const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+  if(reduce||document.body.classList.contains("a11y-stop"))return;
+  testTimer=setInterval(()=>{ testIdx=(testIdx+1)%TESTIMONIALS.length; updateTest(); },5000);
+}
+function setupTestSlider(){
+  renderTestimonials(); updateTest();
+  $("testNext").addEventListener("click",nextTest);
+  $("testPrev").addEventListener("click",prevTest);
+  const sl=$("testSlider");
+  sl.addEventListener("mouseenter",()=>{ if(testTimer)clearInterval(testTimer); });
+  sl.addEventListener("mouseleave",restartTest);
+  // swipe on touch
+  let sx=0; const vp=sl.querySelector(".test-viewport");
+  vp.addEventListener("touchstart",e=>{sx=e.touches[0].clientX;},{passive:true});
+  vp.addEventListener("touchend",e=>{ const dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>40){ dx<0?nextTest():prevTest(); } },{passive:true});
+  restartTest();
 }
 
 /* ---------- modal: 4-step booking form ---------- */
@@ -1420,7 +1498,7 @@ function setupBookingFields(){
   if(lug)lug.addEventListener("input",()=>{ state.luggage=lug.value.trim()||"יש מטען"; updatePreview(); });
 }
 /* ---------- init ---------- */
-renderFleet(); renderAreas(); renderFAQ(); applyConfig();
+renderFleet(); renderAreas(); renderFAQ(); setupTestSlider(); applyConfig();
 setupCombo("originInput","originList"); setupCombo("destInput","destList");
 setupReveals(); setupA11yWidget(); setupBookingFields();
 
