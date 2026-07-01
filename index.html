@@ -118,6 +118,7 @@
   --bg:#0B0B0D; --bg-elev:#141417; --bg-elev-2:#1B1B20;
   --ivory:#F5F2EC; --muted:#A29E97; --line:#26262C;
   --gold:#D9BE86; --gold-deep:#B8975A; --gold-glow:rgba(217,190,134,.14);
+  --gold-metal:linear-gradient(135deg,#F0DDB0,#D9BE86 28%,#B8975A 60%,#E7CF9C 82%,#B8975A);
   --silver:#C9CDD3; --silver-deep:#8C9098; --silver-glow:rgba(201,205,211,.10);
   --wa:#25D366; --radius:16px; --maxw:1140px;
   --ease:cubic-bezier(.16,1,.3,1);
@@ -135,6 +136,13 @@ body.locked{overflow:hidden}
 .wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:26px}
 a{color:inherit;text-decoration:none}
 .gold{color:var(--gold)}
+/* foiled gold text — metallic vertical sheen. fallback color first, guarded for a11y-contrast */
+body:not(.a11y-contrast) .eyebrow,
+body:not(.a11y-contrast) .hero-meta .num,
+body:not(.a11y-contrast) .brand .logo b,
+body:not(.a11y-contrast) .foot-brand .logo b{
+  background:linear-gradient(180deg,#F4E6C4,#E3CA97 42%,#C2A468 78%,#E0C88F);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--gold)}
 img{max-width:100%;height:auto;display:block}
 .eyebrow{font-size:12px;letter-spacing:.32em;color:var(--gold);text-transform:uppercase;
   font-weight:500;margin-block-end:20px;display:inline-block}
@@ -154,8 +162,12 @@ img{max-width:100%;height:auto;display:block}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;
   font-family:var(--sans);font-weight:500;font-size:16px;border:none;padding:15px 32px;border-radius:100px;
   transition:transform .4s var(--ease),box-shadow .4s var(--ease),color .3s,border-color .3s,background .3s}
-.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-deep));color:#16130E}
+.btn-gold{position:relative;overflow:hidden;background:var(--gold-metal);color:#16130E;box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
 .btn-gold:hover{transform:translateY(-3px);box-shadow:0 14px 34px var(--gold-glow)}
+.btn-gold::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.42) 50%,transparent 62%);
+  transform:translateX(-120%);transition:transform .7s var(--ease)}
+.btn-gold:hover::after{transform:translateX(120%)}
 .btn-ghost{background:transparent;color:var(--ivory);border:1px solid var(--line)}
 .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
 .btn-wa{background:var(--wa);color:#062b14}
@@ -328,13 +340,50 @@ header.scrolled{background:rgba(11,11,13,.9);border-block-end-color:var(--line);
   font-family:var(--sans);font-size:15px;font-weight:500;padding:12px 26px;cursor:pointer;
   transition:border-color .3s,color .3s,background .3s}
 .fleet-tab:hover{border-color:var(--gold);color:var(--gold)}
-.fleet-tab.on{background:linear-gradient(135deg,var(--gold),var(--gold-deep));color:#16130E;border-color:transparent}
+.fleet-tab.on{background:var(--gold-metal);color:#16130E;border-color:transparent;box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
 @media(max-width:560px){.fleet-tab{padding:11px 18px;font-size:14px}}
 /* real-photo cards fill the media (no floating/halo), illustration cards keep contain */
 .car-media.media-photo{background:#0f0f12}
 .car-media.media-photo::before,.car-media.media-photo::after{display:none}
 .car-media.media-photo img.is-real{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;padding:0;
   filter:none;transition:transform .6s var(--ease)}
+/* ====================== card actions + gallery count ====================== */
+.car-media{border:none;padding:0;cursor:pointer;font-family:inherit;text-align:inherit;width:100%}
+.car-galcount{position:absolute;z-index:2;inset-block-start:12px;inset-inline-end:12px;
+  background:rgba(11,11,13,.78);color:var(--ivory);font-size:12px;font-weight:500;
+  padding:5px 11px;border-radius:100px;backdrop-filter:blur(4px)}
+.car-actions{display:flex;gap:10px;width:100%}
+.car-actions .btn{width:auto;min-width:0}
+.btn-detail{flex:0 0 auto;background:transparent;color:var(--ivory);border:1px solid var(--line);padding:13px 22px;white-space:nowrap}
+.car-card:hover .btn-detail{border-color:var(--silver);color:var(--silver)}
+.btn-book{flex:1 1 auto}
+
+/* ====================== detail modal ====================== */
+.modal-detail{max-width:640px;padding:0;overflow:hidden}
+.detail-gallery{position:relative;aspect-ratio:16/10;background:#0f0f12;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.detail-gallery img{width:100%;height:100%;object-fit:cover;display:block}
+.detail-gallery img.gal-illus{object-fit:contain;padding:6% 6% 9%;
+  background:radial-gradient(ellipse 80% 70% at 50% 42%,#1E1E24,var(--bg-elev) 70%,#101013)}
+.gal-nav{position:absolute;inset-block-start:50%;transform:translateY(-50%);z-index:3;
+  width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:rgba(11,11,13,.7);
+  color:var(--ivory);font-size:26px;line-height:1;cursor:pointer;display:grid;place-items:center;
+  backdrop-filter:blur(4px);transition:background .25s,border-color .25s}
+.gal-nav:hover{background:rgba(11,11,13,.92);border-color:var(--gold);color:var(--gold)}
+.gal-prev{inset-inline-start:14px}
+.gal-next{inset-inline-end:14px}
+.gal-dots{position:absolute;inset-block-end:14px;inset-inline:0;z-index:3;display:flex;gap:7px;justify-content:center}
+.gal-dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4);transition:background .3s,transform .3s}
+.gal-dots i.on{background:var(--gold);transform:scale(1.2)}
+.detail-badge{position:absolute;z-index:3;inset-block-start:14px;inset-inline-start:14px;
+  background:rgba(11,11,13,.78);color:var(--gold);font-size:12px;font-weight:500;padding:6px 13px;border-radius:100px;backdrop-filter:blur(4px)}
+.detail-body{padding:26px 30px 30px}
+.detail-body h3{font-family:var(--serif);font-weight:700;font-size:25px;margin-block-end:8px}
+.detail-desc{color:var(--muted);font-size:15px;line-height:1.7;margin-block-end:22px}
+.detail-feat-title{font-size:13px;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-block-end:14px}
+.detail-features{list-style:none;padding:0;margin:0 0 24px;display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}
+.detail-features li{position:relative;padding-inline-start:20px;font-size:14px;color:var(--ivory);line-height:1.4}
+.detail-features li::before{content:"✓";position:absolute;inset-inline-start:0;color:var(--gold);font-weight:700}
+@media(max-width:560px){.detail-features{grid-template-columns:1fr}}
 /* ====================== car subtypes list ====================== */
 .car-subtypes{list-style:none;margin:0 0 20px;padding:0;display:flex;flex-direction:column;gap:7px}
 .car-subtypes li{position:relative;padding-inline-start:18px;font-size:13.5px;color:var(--muted);line-height:1.4}
@@ -483,6 +532,25 @@ footer{padding-block:64px 110px;border-block-start:1px solid var(--line);backgro
   font-size:15px;padding:12px 18px;cursor:pointer;transition:background .2s,color .2s}
 .combo-list button:hover,.combo-list button.hl{background:var(--gold-glow);color:var(--gold)}
 .field-err{color:#E0746E;font-size:13.5px;min-height:1.1em;margin-block-start:7px;font-weight:400}
+/* modal success view */
+.modal-success{text-align:center;padding-block:8px}
+.success-check{width:76px;height:76px;margin:6px auto 18px;display:block}
+.success-check .sc-circle{stroke:var(--gold);stroke-width:2.5;
+  stroke-dasharray:151;stroke-dashoffset:151;animation:scCircle .5s var(--ease) forwards}
+.success-check .sc-mark{stroke:var(--gold);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:40;stroke-dashoffset:40;animation:scMark .35s var(--ease) forwards .42s}
+@keyframes scCircle{to{stroke-dashoffset:0}}
+@keyframes scMark{to{stroke-dashoffset:0}}
+.modal-success h3{font-family:var(--serif);font-size:24px;margin-block-end:8px}
+.success-actions{display:flex;gap:12px;margin-block-start:24px}
+.success-actions .btn{flex:1;justify-content:center}
+.success-done{margin-block-start:16px;background:none;border:none;color:var(--muted);
+  font-family:var(--sans);font-size:14px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.success-done:hover{color:var(--ivory)}
+@media(prefers-reduced-motion:reduce){
+  .success-check .sc-circle,.success-check .sc-mark{animation:none;stroke-dashoffset:0}
+}
+body.a11y-stop .success-check .sc-circle,body.a11y-stop .success-check .sc-mark{animation:none;stroke-dashoffset:0}
 .fld-label{display:block;font-size:13px;color:var(--muted);margin-block:14px 7px;font-weight:400}
 .fld{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:14px;color:var(--ivory);
   font-family:var(--sans);font-size:16px;padding:14px 16px;transition:border-color .25s,box-shadow .25s}
@@ -617,21 +685,6 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
   </div>
 </section>
 
-<!-- ===================== premium fleet showroom ===================== -->
-<section class="showroom" id="showroom" aria-label="צי הרכבים של Horian Premium">
-  <div class="wrap">
-    <div class="sec-head reveal"><span class="eyebrow">צי פרימיום</span>
-      <h2>צי רכבי יוקרה — Horian Premium</h2>
-      <p>מבחר רכבים שחורים מהשורה הראשונה: סדאן יוקרה, ג'יפים, ספרינטר ו-VIP — כולם מטופחים ומוכנים לנסיעה.</p></div>
-    <div class="showroom-img reveal">
-      <img src="assets/fleet-hero-1024.webp"
-           srcset="assets/fleet-hero-640.webp 640w, assets/fleet-hero-1024.webp 1024w, assets/fleet-hero-1600.webp 1600w"
-           sizes="(max-width:1360px) 92vw, 1320px"
-           width="1672" height="941" loading="lazy" decoding="async"
-           alt="צי הרכבים של Horian Premium — רכבי יוקרה שחורים באולם תצוגה" />
-    </div>
-  </div>
-</section>
 <!-- ===================== fleet ===================== -->
 <section class="fleet" id="fleet">
   <div class="wrap">
@@ -844,9 +897,47 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
         </button>
       </div>
     </div>
+
+    <!-- success view -->
+    <div id="stepSuccess" class="mstep modal-success" style="display:none" aria-live="polite">
+      <svg class="success-check" viewBox="0 0 52 52" aria-hidden="true">
+        <circle class="sc-circle" cx="26" cy="26" r="24" fill="none"/>
+        <path class="sc-mark" fill="none" d="M14 27l8 8 16-18"/>
+      </svg>
+      <h3>נפתח וואטסאפ ✓</h3>
+      <p class="step-sub">ההודעה מוכנה — רק ללחוץ <b>שלח</b> שם ונחזור אליכם עם הצעת מחיר.</p>
+      <div class="success-actions">
+        <a id="successCall" class="btn btn-ghost" href="#">☎ להתקשר במקום</a>
+        <button class="btn btn-gold" onclick="reopenWhatsApp()">לא נפתח? פתחו שוב</button>
+      </div>
+      <button class="success-done" onclick="closeModal()">סגירה</button>
+    </div>
   </div>
 </div>
 
+<!-- ===================== vehicle detail modal ===================== -->
+<div class="overlay" id="detailOverlay" role="dialog" aria-modal="true" aria-labelledby="detailTitle" aria-hidden="true">
+  <div class="modal modal-detail" id="detailModal">
+    <button class="modal-close" onclick="closeDetail()" aria-label="סגירת חלון הפרטים">×</button>
+    <div class="detail-gallery">
+      <img id="detailImg" src="" alt="" width="1000" height="750" decoding="async" />
+      <button class="gal-nav gal-prev" id="galPrev" onclick="galStep(-1)" aria-label="תמונה קודמת">‹</button>
+      <button class="gal-nav gal-next" id="galNext" onclick="galStep(1)" aria-label="תמונה הבאה">›</button>
+      <div class="gal-dots" id="galDots" aria-hidden="true"></div>
+      <span class="car-badge detail-badge" id="detailBadge"></span>
+    </div>
+    <div class="detail-body">
+      <h3 id="detailTitle"></h3>
+      <p id="detailDesc" class="detail-desc"></p>
+      <h4 class="detail-feat-title">תכונות ואבזור</h4>
+      <ul class="detail-features" id="detailFeatures"></ul>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeDetail()">→ חזרה</button>
+        <button class="btn btn-gold" id="detailBook" onclick="bookFromDetail()">הזמן רכב זה ←</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- ===================== recruitment modal ===================== -->
 <div class="overlay" id="recruitOverlay" role="dialog" aria-modal="true" aria-labelledby="recruitTitle" aria-hidden="true">
   <div class="modal" id="recruitModal">
@@ -897,38 +988,68 @@ const CATEGORIES = [
   { key:"shuttle", title:"רכבי הסעות 12–23", short:"הסעות" },
 ];
 
-/* דגמים. real=true → תמונה אמיתית (assets/real-...-600/1000.webp). אחרת איור (assets/<img>-480/760.webp). */
+/* דגמים. real=true → תמונות אמיתיות (assets/<img>-600/1000.webp). אחרת איור (assets/<img>-480/760.webp).
+   gallery = שמות תמונות למודאל הפרטים. features = תכונות/אבזור. */
 const MODELS = [
-  // מוניות
+  // ===== מוניות =====
   { cat:"taxi", key:"taxi4", name:"מונית 4 מקומות", cap:"עד 4 נוסעים", msg:"מונית 4 מקומות (לבנה)",
     real:true, img:"real-mercedes-1", alt:"מונית מרצדס EQE לבנה",
-    desc:"מונית יוקרה חשמלית לבנה — נסיעה שקטה, נקייה ומטופחת לכל יום." },
+    desc:"מונית יוקרה חשמלית לבנה — נסיעה שקטה, נקייה ומטופחת לכל יום.",
+    gallery:["real-mercedes-1","real-mercedes-2","real-mercedes-3"],
+    features:["מרצדס EQE חשמלית","עד 4 נוסעים","נסיעה שקטה ונקייה","מטען לרכב פרטי","מיזוג אוויר","זמין 24/7"] },
   { cat:"taxi", key:"taxi6", name:"מונית 6 מקומות", cap:"עד 6 נוסעים", msg:"מונית 6 מקומות (לבנה)",
     img:"car-6seat", alt:"מונית 6 מקומות",
-    desc:"מרווחת יותר — מושלמת לקבוצות, משפחות ומזוודות." },
+    desc:"מרווחת יותר — מושלמת לקבוצות, משפחות ומזוודות.",
+    features:["עד 6 נוסעים","מרחב וראש נדיב","מקום למזוודות","מתאים למשפחות","מיזוג אוויר"] },
   { cat:"taxi", key:"access", name:"מונית נגישה", cap:"כיסא גלגלים", msg:"מונית נגישה (מותאמת לכיסא גלגלים)",
     img:"car-access", alt:"מונית נגישה עם רמפה",
-    desc:"רכב מותאם ומאובזר ברמפה להסעת נוסעים עם מוגבלות בנוחות מלאה." },
-  // וואנים
+    desc:"רכב מותאם ומאובזר ברמפה להסעת נוסעים עם מוגבלות בנוחות מלאה.",
+    features:["רמפה לכיסא גלגלים","עיגון בטיחותי","כניסה נוחה","נהג מסייע","מיזוג אוויר"] },
+  // ===== מיני-וואן ו-ואנים =====
   { cat:"van", key:"sienna", name:"טויוטה סיינה", cap:"מיני-וואן · עד 6", msg:"מיני-וואן טויוטה סיינה (6 נוסעים)",
     real:true, img:"real-sienna-1", alt:"מיני-וואן טויוטה סיינה לבנה",
-    desc:"מיני-וואן לבן ומרווח — מושלם למשפחות, מזוודות וקבוצות קטנות." },
+    desc:"מיני-וואן לבן ומרווח — מושלם למשפחות, מזוודות וקבוצות קטנות.",
+    gallery:["real-sienna-1","real-sienna-2","real-sienna-3"],
+    features:["טויוטה סיינה","עד 6 נוסעים","מושבי קפטן נוחים","תא מטען גדול","מיזוג אזורי","היברידי חסכוני"] },
   { cat:"van", key:"vclass", name:"מרצדס V-Class", cap:"ואן · עד 8", msg:"ואן מרצדס V-Class (8 נוסעים)",
     real:true, img:"real-vclass-1", alt:"ואן מרצדס V-Class שחור",
-    desc:"ואן שחור יוקרתי עם אבזור פרימיום — הסעות VIP ואורחים עסקיים." },
-  { cat:"van", key:"van10", name:"ויטו / ויאנו / סטריה", cap:"ואן · 8–10", msg:"ואן (ויטו / ויאנו / טרנספורטר / סטריה)",
-    img:"car-minibus", alt:"ואן הסעות שחור",
-    desc:"ואנים נוספים ל-8–10 נוסעים (ויטו, ויאנו, טרנספורטר, יונדאי סטריה) — מתאספים לרכבי הסעות עם אבזור משתנה." },
-  // הסעות
-  { cat:"shuttle", key:"sprinter", name:"מרצדס ספרינטר", cap:"הסעות · עד 20", msg:"רכב הסעות ספרינטר (עד 20 נוסעים)",
-    real:true, img:"real-sprinter-1", alt:"רכב הסעות מרצדס ספרינטר", vip:true,
-    desc:"רכב הסעה גדול ל-20 נוסעים — קבוצות, אירועים וטיולים בנוחות מלאה." },
-  { cat:"shuttle", key:"limo", name:"לימו / חצי לימו", cap:"12 · 16 נוסעים", msg:"רכב הסעות — לימו (12) / חצי לימו (16)",
-    img:"car-minibus", alt:"רכב הסעות לימו",
-    desc:"תצורת לימו מלא (12 נוסעים) וחצי לימו (16) — ספרינטר / קרפטר / טרנזיט ברמת גימור גבוהה." },
-  { cat:"shuttle", key:"coach", name:"רכב הסעות 19–23", cap:"19 · 20 · 23", msg:"רכב הסעות גדול (19–23 נוסעים)",
-    img:"car-minibus", alt:"רכב הסעות גדול", vip:true,
-    desc:"הרכבים הגדולים — 19, 20 ו-23 נוסעים (ספרינטר / קרפטר / טרנזיט / סוואנה / איווקו). יש הבדלי מחיר משמעותיים בין הדגמים." },
+    desc:"ואן שחור יוקרתי עם אבזור פרימיום — הסעות VIP ואורחים עסקיים.",
+    gallery:["real-vclass-1","real-vclass-2","real-vclass-3"],
+    features:["מרצדס V-Class","עד 8 נוסעים","פנים עור פרימיום","תאורת אווירה","דלתות הזזה חשמליות","מתאים ל-VIP ועסקים"] },
+  { cat:"van", key:"vito", name:"מרצדס ויטו", cap:"ואן · עד 8", msg:"ואן מרצדס ויטו (עד 8 נוסעים)",
+    img:"car-minibus", alt:"ואן מרצדס ויטו שחור",
+    desc:"ואן שחור אמין ומרווח ל-8 נוסעים — הסעות עירוניות ובינעירוניות.",
+    features:["מרצדס ויטו","עד 8 נוסעים","תא מטען מרווח","מיזוג אזורי","דלת הזזה"] },
+  { cat:"van", key:"viano", name:"מרצדס ויאנו", cap:"ואן · עד 8", msg:"ואן מרצדס ויאנו (עד 8 נוסעים)",
+    img:"car-minibus", alt:"ואן מרצדס ויאנו שחור",
+    desc:"ואן יוקרה ל-8 נוסעים בתצורת נוחות — אירועים והסעות מפנקות.",
+    features:["מרצדס ויאנו","עד 8 נוסעים","ישיבה מרווחת","מיזוג אזורי","גימור פרימיום"] },
+  { cat:"van", key:"transporter", name:"פולקסווגן טרנספורטר", cap:"ואן · 8–9", msg:"ואן פולקסווגן טרנספורטר (8–9 נוסעים)",
+    img:"car-minibus", alt:"ואן פולקסווגן טרנספורטר",
+    desc:"ואן חזק ואמין ל-8–9 נוסעים — הסעות קבוצות וציוד.",
+    features:["פולקסווגן טרנספורטר","8–9 נוסעים","תא מטען גדול","אמין לנסיעות ארוכות","מיזוג"] },
+  { cat:"van", key:"staria", name:"יונדאי סטריה", cap:"ואן · עד 9", msg:"ואן יונדאי סטריה (עד 9 נוסעים)",
+    img:"car-minibus", alt:"ואן יונדאי סטריה",
+    desc:"ואן מודרני ומרווח ל-9 נוסעים — עיצוב חדשני ונסיעה נוחה (מחיר שונה).",
+    features:["יונדאי סטריה","עד 9 נוסעים","עיצוב מודרני","חלונות גדולים","מיזוג אזורי"] },
+  // ===== רכבי הסעות =====
+  { cat:"shuttle", key:"limo12", name:"לימו מלא — 12 נוסעים", cap:"12 נוסעים", msg:"רכב הסעות לימו מלא (12 נוסעים)", vip:true,
+    img:"car-minibus", alt:"רכב הסעות לימו 12 מקומות",
+    desc:"תצורת לימו מלא ל-12 נוסעים — ספרינטר / קרפטר / טרנזיט ברמת גימור גבוהה.",
+    features:["12 נוסעים","גימור לימו","מושבים מרווחים","תא מטען","מיזוג","מתאים לאירועים"] },
+  { cat:"shuttle", key:"limo16", name:"חצי לימו — 16 נוסעים", cap:"16 נוסעים", msg:"רכב הסעות חצי לימו (16 נוסעים)", vip:true,
+    img:"car-minibus", alt:"רכב הסעות חצי לימו 16 מקומות",
+    desc:"תצורת חצי לימו ל-16 נוסעים — איזון בין קיבולת לנוחות.",
+    features:["16 נוסעים","גימור חצי לימו","מושבים נוחים","תא מטען גדול","מיזוג"] },
+  { cat:"shuttle", key:"sprinter", name:"מרצדס ספרינטר — עד 20", cap:"עד 20 נוסעים", msg:"רכב הסעות ספרינטר (עד 20 נוסעים)", vip:true,
+    real:true, img:"real-sprinter-1", alt:"רכב הסעות מרצדס ספרינטר",
+    desc:"רכב הסעה גדול ל-20 נוסעים — קבוצות, אירועים וטיולים בנוחות מלאה.",
+    gallery:["real-sprinter-1","real-sprinter-2","real-sprinter-3"],
+    features:["מרצדס ספרינטר","עד 20 נוסעים","תא מטען גדול","תאורת אווירה","מיזוג","מתאים לטיולים"] },
+  { cat:"shuttle", key:"coach23", name:"רכב הסעות 19–23", cap:"19 · 20 · 23", msg:"רכב הסעות גדול (19–23 נוסעים)", vip:true,
+    img:"car-minibus", alt:"רכב הסעות גדול 23 מקומות",
+    desc:"הרכבים הגדולים — 19, 20 ו-23 נוסעים (ספרינטר / קרפטר / טרנזיט / סוואנה / איווקו).",
+    features:["19 / 20 / 23 נוסעים","קיבולת מקסימלית","תא מטען גדול","מיזוג","מתאים לקבוצות גדולות","הבדלי מחיר בין דגמים"] },
 ];
 let state = { vehicle:null, origin:"", destination:"", passengers:"", name:"", phone:"", luggage:"", step:1 };
 const $ = id => document.getElementById(id);
@@ -955,16 +1076,20 @@ function renderFleet(){
   ).join("");
   // cards for active tab
   const cards = MODELS.filter(m=>m.cat===activeTab);
-  $("fleetGrid").innerHTML = cards.map(m => `
-    <article class="car-card${m.vip ? " vip" : ""}${m.real?" has-photo":""}">
-      <div class="car-media${m.real?" media-photo":""}">
+  $("fleetGrid").innerHTML = cards.map((m,idx) => `
+    <article class="car-card${m.vip ? " vip" : ""}${m.real?" has-photo":""}" style="--i:${idx}">
+      <button class="car-media${m.real?" media-photo":""}" onclick="openDetail('${m.key}')" aria-label="פרטים על ${esc(m.name)}">
         <span class="car-badge">${esc(m.cap)}</span>
+        ${m.gallery&&m.gallery.length>1?`<span class="car-galcount">📷 ${m.gallery.length}</span>`:""}
         ${modelImgTag(m)}
-      </div>
+      </button>
       <div class="car-body">
         <h3>${esc(m.name)}</h3>
         <p>${esc(m.desc)}</p>
-        <button class="btn" onclick="openModal('${m.key}')" aria-label="הזמנת ${esc(m.name)}">הזמן ${esc(m.name)} ←</button>
+        <div class="car-actions">
+          <button class="btn btn-detail" onclick="openDetail('${m.key}')">פרטים</button>
+          <button class="btn btn-gold btn-book" onclick="openModal('${m.key}')" aria-label="הזמנת ${esc(m.name)}">הזמן ←</button>
+        </div>
       </div>
     </article>`).join("");
 }
@@ -1047,12 +1172,63 @@ function updatePreview(){
   m.innerHTML = `ההודעה שתישלח:\n`+esc(buildMessage()).replace(/(מוצא:|יעד:|מטען:|מתי:)/g,"<b>$1</b>");
 }
 function buildLink(text){ return `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(text)}`; }
+let lastWaLink="";
 function sendWhatsApp(){
   if($("lugInput") && $("lugInput").offsetParent!==null){ const t=$("lugInput").value.trim(); if(t)state.luggage=t; }
   if(!state.luggage)state.luggage="ללא מטען מיוחד";
   const text=buildMessage();
+  lastWaLink=buildLink(text);
   track("lead_whatsapp",{vehicle:state.vehicle.key,origin:state.origin,destination:state.destination});
-  window.open(buildLink(text),"_blank"); closeModal();
+  window.open(lastWaLink,"_blank");           // must stay first (popup-blocker safety)
+  // set up click-to-call recovery + show success view instead of closing
+  const call=$("successCall"); if(call)call.href="tel:"+CONFIG.displayPhone.replace(/\D/g,"");
+  for(let i=1;i<=3;i++){ $("step"+i).style.display="none"; $("dot"+i).classList.add("active"); }
+  $("stepSuccess").style.display="block";
+}
+function reopenWhatsApp(){ if(lastWaLink)window.open(lastWaLink,"_blank"); }
+/* ---------- vehicle detail modal + gallery ---------- */
+let detailModel=null, galShots=[], galIdx=0, lastDetailFocus=null;
+function galImgSrc(slug){
+  const m=MODELS.find(x=>x.gallery&&x.gallery.includes(slug));
+  return slug.startsWith("real-") ? `assets/${slug}-1000.webp` : `assets/${slug}-760.webp`;
+}
+function openDetail(key){
+  detailModel=MODELS.find(m=>m.key===key); if(!detailModel)return;
+  galShots = (detailModel.gallery&&detailModel.gallery.length) ? detailModel.gallery.slice()
+    : [detailModel.img];
+  galIdx=0;
+  $("detailTitle").textContent=detailModel.name;
+  $("detailDesc").textContent=detailModel.desc;
+  $("detailBadge").textContent=detailModel.cap;
+  $("detailFeatures").innerHTML=(detailModel.features||[]).map(f=>`<li>${esc(f)}</li>`).join("");
+  renderGal();
+  lastDetailFocus=document.activeElement;
+  const ov=$("detailOverlay"); ov.classList.add("show"); ov.setAttribute("aria-hidden","false");
+  document.body.classList.add("locked");
+  setTimeout(()=>$("detailModal").focus&&$("detailModal").focus(),100);
+}
+function renderGal(){
+  const slug=galShots[galIdx];
+  const isReal=slug.startsWith("real-");
+  const img=$("detailImg");
+  img.src = isReal ? `assets/${slug}-1000.webp` : `assets/${slug}-760.webp`;
+  img.alt = detailModel.name+" — תמונה "+(galIdx+1);
+  img.classList.toggle("gal-illus",!isReal);
+  const multi=galShots.length>1;
+  $("galPrev").style.display=multi?"grid":"none";
+  $("galNext").style.display=multi?"grid":"none";
+  $("galDots").innerHTML = multi ? galShots.map((_,i)=>`<i class="${i===galIdx?"on":""}"></i>`).join("") : "";
+}
+function galStep(dir){
+  if(galShots.length<2)return;
+  galIdx=(galIdx+dir+galShots.length)%galShots.length; renderGal();
+}
+function closeDetail(){
+  const ov=$("detailOverlay"); ov.classList.remove("show"); ov.setAttribute("aria-hidden","true");
+  document.body.classList.remove("locked"); if(lastDetailFocus)lastDetailFocus.focus();
+}
+function bookFromDetail(){
+  const key=detailModel.key; closeDetail(); setTimeout(()=>openModal(key),180);
 }
 function generalWhatsApp(){ track("lead_whatsapp_general",{}); window.open(buildLink("שלום, אשמח לפרטים ולהזמנת מונית."),"_blank"); }
 function dayTripWhatsApp(){
@@ -1135,7 +1311,8 @@ function pickCity(inputId,listId,i){
 function trapFocus(e){
   if(e.key!=="Tab")return;
   const ov = $("overlay").classList.contains("show") ? $("overlay")
-           : $("recruitOverlay").classList.contains("show") ? $("recruitOverlay") : null;
+           : $("recruitOverlay").classList.contains("show") ? $("recruitOverlay")
+           : $("detailOverlay").classList.contains("show") ? $("detailOverlay") : null;
   if(!ov)return;
   const f=[...ov.querySelectorAll('button,[href],input,[tabindex]:not([tabindex="-1"])')]
     .filter(el=>el.offsetParent!==null);
@@ -1227,10 +1404,13 @@ addEventListener("scroll",()=>$("hdr").classList.toggle("scrolled",scrollY>20),{
 addEventListener("keydown",e=>{
   if(e.key==="Escape"&&$("overlay").classList.contains("show"))closeModal();
   if(e.key==="Escape"&&$("recruitOverlay").classList.contains("show"))closeRecruit();
+  if(e.key==="Escape"&&$("detailOverlay").classList.contains("show"))closeDetail();
+  if($("detailOverlay").classList.contains("show")){ if(e.key==="ArrowRight")galStep(-1); if(e.key==="ArrowLeft")galStep(1); }
   trapFocus(e);
 });
 $("overlay").addEventListener("click",e=>{ if(e.target===$("overlay"))closeModal(); });
 $("recruitOverlay").addEventListener("click",e=>{ if(e.target===$("recruitOverlay"))closeRecruit(); });
+$("detailOverlay").addEventListener("click",e=>{ if(e.target===$("detailOverlay"))closeDetail(); });
 </script>
 </body>
 </html>
