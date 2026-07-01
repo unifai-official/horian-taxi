@@ -334,23 +334,22 @@ body.a11y-stop .fleet-grid .car-card{animation:none}
 
 /* ====================== airport (natbag) full-bleed banner ====================== */
 .airport{position:relative;width:100%;margin-block:90px 0;min-height:clamp(360px,46vw,560px);
-  display:flex;align-items:center;overflow:hidden;border-block:1px solid var(--line)}
+  display:flex;align-items:flex-end;overflow:hidden;border-block:1px solid var(--line)}
 .airport-bg{position:absolute;inset:0;z-index:0}
 .airport-bg img{width:100%;height:100%;object-fit:cover;object-position:center}
-/* gradient so an HTML CTA on the right stays legible over the banner art */
+/* bottom gradient so the real CTA stays legible over the banner art */
 .airport::after{content:"";position:absolute;inset:0;z-index:1;
-  background:linear-gradient(90deg,rgba(11,11,13,.15),rgba(11,11,13,.05) 55%,rgba(11,11,13,.45))}
-.airport .wrap{position:relative;z-index:2;width:100%;display:flex;justify-content:flex-start}
-/* invisible-but-clickable CTA placed over the painted "להזמנה עכשיו" button area */
-.airport-cta{display:inline-flex;align-items:center;gap:10px;
-  background:transparent;color:transparent;border:none;cursor:pointer;
-  position:absolute;z-index:3;inset-block-start:62%;inset-inline-start:6%;
-  width:min(260px,30%);height:11%;min-height:46px}
-/* on small screens the painted button shifts; provide a real visible fallback CTA */
-.airport-fallback{display:none}
+  background:linear-gradient(to top,rgba(11,11,13,.6),transparent 40%)}
+.airport .wrap{position:relative;z-index:2;width:100%;display:flex;justify-content:flex-start;padding-block-end:36px}
+/* real, visible CTA box (image already carries the headline/value text) */
+.airport-cta-box{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.airport-cta-box .eyebrow{margin-block-end:2px}
+.airport-vp{color:var(--ivory);font-size:15px;margin-block-end:12px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.airport-cta-box .btn{font-size:16px}
 @media(max-width:760px){
-  .airport{min-height:0;aspect-ratio:1734/907}
-  .airport-cta{display:none}
+  .airport{min-height:0;aspect-ratio:1733/908;align-items:flex-end}
+  .airport .wrap{padding-block-end:20px}
+  .airport-vp{display:none}
 }
 /* ====================== fleet featured image + tabs ====================== */
 .fleet-hero{position:relative;max-width:1080px;margin:0 auto 40px;border-radius:var(--radius);overflow:hidden;
@@ -743,16 +742,30 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
 <!-- ===================== airport (natbag) full-bleed banner ===================== -->
 <section class="airport" id="airport" aria-label="הסעות יוקרה לשדה התעופה נתב״ג">
   <div class="airport-bg" aria-hidden="true">
-    <img src="assets/airport-1600.webp"
-         srcset="assets/airport-640.webp 640w, assets/airport-1024.webp 1024w, assets/airport-1600.webp 1600w"
-         sizes="100vw" width="1734" height="907" loading="lazy" decoding="async"
-         alt="Horian Premium — הסעות יוקרה לנתב״ג: רכבים שחורים מול טרמינל שדה התעופה בן גוריון, שירות VIP, נהגים מקצועיים, זמינות 24/7" />
+    <img src="assets/airport-1600.webp?v=2"
+         srcset="assets/airport-640.webp?v=2 640w, assets/airport-1024.webp?v=2 1024w, assets/airport-1600.webp?v=2 1600w"
+         sizes="100vw" width="1733" height="908" loading="lazy" decoding="async"
+         alt="Horian Premium — הסעות יוקרה לנתב״ג: רכבי יוקרה שחורים מול טרמינל שדה התעופה בן גוריון, שירות VIP, נהגים מקצועיים, זמינות 24/7" />
   </div>
   <div class="wrap">
-    <!-- real clickable CTA over the painted "להזמנה עכשיו" button -->
-    <button class="airport-cta" onclick="generalWhatsApp()" aria-label="הזמנת הסעה לנתב״ג בוואטסאפ">להזמנה עכשיו</button>
+    <div class="airport-cta-box reveal">
+      <button class="btn btn-gold" onclick="generalWhatsApp()" aria-label="הזמנת הסעה לנתב״ג בוואטסאפ">להזמנת הסעה לנתב״ג ←</button>
+    </div>
   </div>
 </section>
+
+<!-- ===================== day-trip / group tours banner ===================== -->
+<section class="daytrip" id="daytrip" aria-label="הצמדה ליום שלם וטיולים">
+  <div class="wrap">
+    <div class="daytrip-inner reveal">
+      <span class="eyebrow">יום שלם · קבוצות · טיולים</span>
+      <h2>יום שלם, קבוצה אחת, נהג צמוד</h2>
+      <p>הצמדת רכב ונהג ליום מלא — סיורי תיירים, טיולים וקבוצות. תכנון מסלול גמיש, המתנה בין היעדים ותמחור מותאם ליום.</p>
+      <button class="btn btn-gold" onclick="dayTripWhatsApp()">לתיאום יום טיול / הצמדה ←</button>
+    </div>
+  </div>
+</section>
+
 <!-- ===================== why ===================== -->
 <section class="why" id="why">
   <div class="wrap">
@@ -774,17 +787,6 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
   </div>
 </section>
 
-<!-- ===================== areas ===================== -->
-<section class="areas" id="areas">
-  <div class="wrap reveal">
-    <span class="eyebrow">פריסה ארצית</span>
-    <h2>אזורי השירות שלנו</h2>
-    <p style="color:var(--muted);margin-block-start:14px">נסיעות בתוך העיר, לשדה התעופה ולכל רחבי הארץ.</p>
-    <div class="area-chips" id="areaChips"></div>
-  </div>
-</section>
-
-<!-- ===================== testimonials ===================== -->
 <!-- ===================== testimonials slider ===================== -->
 <section class="test" aria-label="המלצות לקוחות">
   <div class="wrap">
@@ -798,17 +800,16 @@ body.a11y-stop .hero h1 .accent .draw{transform:scaleX(1) !important}
   </div>
 </section>
 
-<!-- ===================== day-trip / group tours banner ===================== -->
-<section class="daytrip" id="daytrip" aria-label="הצמדה ליום שלם וטיולים">
-  <div class="wrap">
-    <div class="daytrip-inner reveal">
-      <span class="eyebrow">יום שלם · קבוצות · טיולים</span>
-      <h2>יום שלם, קבוצה אחת, נהג צמוד</h2>
-      <p>הצמדת רכב ונהג ליום מלא — סיורי תיירים, טיולים וקבוצות. תכנון מסלול גמיש, המתנה בין היעדים ותמחור מותאם ליום.</p>
-      <button class="btn btn-gold" onclick="dayTripWhatsApp()">לתיאום יום טיול / הצמדה ←</button>
-    </div>
+<!-- ===================== areas ===================== -->
+<section class="areas" id="areas">
+  <div class="wrap reveal">
+    <span class="eyebrow">פריסה ארצית</span>
+    <h2>אזורי השירות שלנו</h2>
+    <p style="color:var(--muted);margin-block-start:14px">נסיעות בתוך העיר, לשדה התעופה ולכל רחבי הארץ.</p>
+    <div class="area-chips" id="areaChips"></div>
   </div>
 </section>
+
 <!-- ===================== faq ===================== -->
 <section class="faq" id="faq">
   <div class="wrap">
